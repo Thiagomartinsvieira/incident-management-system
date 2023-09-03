@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+
+import { authContext } from '../../contexts/auth'
 
 const SingUp = () => {
   const [name, setName] = useState('')
@@ -7,7 +9,9 @@ const SingUp = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  const handleSubmit = (e) => {
+  const { singUp, loadingAuth } = useContext(authContext)
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (
@@ -16,7 +20,11 @@ const SingUp = () => {
       password !== '' &&
       confirmPassword !== ''
     ) {
-      alert('Realized')
+      if (password === confirmPassword) {
+        await singUp(name, email, password)
+      } else {
+        alert('Password and password confirmation do not match.')
+      }
     }
   }
 
@@ -53,7 +61,7 @@ const SingUp = () => {
         <span>
           Already have an account? <Link to="/">Click here</Link>
         </span>
-        <input type="submit" value="Create account" />
+        <input type="submit" value={loadingAuth ? 'loading...' : 'Create'} />
       </form>
     </div>
   )
