@@ -6,13 +6,13 @@ const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { signIn } = useContext(AuthContext)
+  const { signIn, loadingAuth } = useContext(AuthContext)
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault()
 
     if (email !== '' && password !== '') {
-      signIn(email, password)
+      await signIn(email, password)
     }
   }
 
@@ -37,7 +37,7 @@ const SignIn = () => {
         <span>
           don't have an account? <Link to="/register">Click here</Link>
         </span>
-        <input type="submit" value="Access" />
+        <input type="submit" value={loadingAuth ? 'Loading...' : 'Acess'} />
       </form>
     </div>
   )
