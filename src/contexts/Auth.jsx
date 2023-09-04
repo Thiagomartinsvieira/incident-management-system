@@ -9,42 +9,40 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loadingAuth, setLoadingAuth] = useState(false)
 
-  const signIn = (email, password) => {
+  function signIn(email, password) {
     console.log(email)
     console.log(password)
-    alert('logado com sucess')
+    alert('LOGADO COM SUCESSO')
   }
 
+  // Cadastrar um novo user
   async function signUp(email, password, name) {
     setLoadingAuth(true)
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      )
-      const user = userCredential.user
-      const uid = user.uid
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(async (value) => {
+        let uid = value.user.uid
 
-      await setDoc(doc(db, 'users', uid), {
-        nome: name,
-        avatarUrl: null,
+        await setDoc(doc(db, 'users', uid), {
+          nome: name,
+          avatarUrl: null,
+        }).then(() => {
+          let data = {
+            uid: uid,
+            nome: name,
+            email: value.user.email,
+            avatarUrl: null,
+          }
+
+          setUser(data)
+
+          setLoadingAuth(false)
+        })
       })
-
-      let data = {
-        uid: uid,
-        nome: name,
-        email: user.email,
-        avatarUrl: null,
-      }
-
-      setUser(data)
-      setLoadingAuth(false)
-    } catch (error) {
-      console.error('Error signing up:', error)
-      setLoadingAuth(false)
-    }
+      .catch((error) => {
+        console.log(error)
+        setLoadingAuth(false)
+      })
   }
 
   return (

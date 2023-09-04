@@ -1,30 +1,39 @@
-import { useContext, useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
-import { authContext } from '../../contexts/auth'
+import { AuthContext } from '../../contexts/Auth'
 
-const SingUp = () => {
+const SignUp = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState(null)
 
-  const { singUp, loadingAuth } = useContext(authContext)
+  const { signUp, loadingAuth } = useContext(AuthContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (
-      name !== '' &&
-      email !== '' &&
-      password !== '' &&
-      confirmPassword !== ''
+      name === '' ||
+      email === '' ||
+      password === '' ||
+      confirmPassword === ''
     ) {
-      if (password === confirmPassword) {
-        await singUp(name, email, password)
-      } else {
-        alert('Password and password confirmation do not match.')
-      }
+      setError('All fields are required.')
+      return
+    }
+
+    if (password !== confirmPassword) {
+      setError('Password and password confirmation do not match.')
+      return
+    }
+
+    try {
+      await signUp(email, password, name)
+    } catch (error) {
+      setError(error.message)
     }
   }
 
@@ -42,7 +51,7 @@ const SingUp = () => {
         />
         <input
           type="text"
-          placeholder="your email"
+          placeholder="Your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -54,17 +63,18 @@ const SingUp = () => {
         />
         <input
           type="password"
-          placeholder="confirm Password"
+          placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
+        {error && <p className="error">{error}</p>}
         <span>
           Already have an account? <Link to="/">Click here</Link>
         </span>
-        <input type="submit" value={loadingAuth ? 'loading...' : 'Create'} />
+        <input type="submit" value={loadingAuth ? 'Loading...' : 'Create'} />
       </form>
     </div>
   )
 }
 
-export default SingUp
+export default SignUp

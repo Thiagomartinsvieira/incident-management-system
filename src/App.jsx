@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import RoutesApp from './routes/routes'
-import AuthProvider from './contexts/auth'
+import AuthProvider from './contexts/Auth'
 
 import './App.css'
 

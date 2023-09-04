@@ -1,12 +1,12 @@
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { authContext } from '../../contexts/auth'
+import { AuthContext } from '../../contexts/Auth'
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { signIn } = useContext(authContext)
+  const { signIn } = useContext(AuthContext)
 
   const handleSignIn = (e) => {
     e.preventDefault()
