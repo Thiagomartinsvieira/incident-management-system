@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export const AuthContext = createContext({})
 
@@ -39,8 +40,9 @@ function AuthProvider({ children }) {
           }
 
           setUser(data)
-
+          storageUser(data)
           setLoadingAuth(false)
+          toast.success('welcome to the incident system')
           navigate('/dashboard')
         })
       })
@@ -48,6 +50,10 @@ function AuthProvider({ children }) {
         console.log(error)
         setLoadingAuth(false)
       })
+  }
+
+  const storageUser = (data) => {
+    localStorage.setItem('@ticketsPRO', JSON.stringify(data))
   }
 
   return (
