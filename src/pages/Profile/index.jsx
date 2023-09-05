@@ -10,9 +10,11 @@ import { useContext, useState } from 'react'
 import './Profile.css'
 
 const Profile = () => {
-  const { user } = useContext(AuthContext)
+  const { user, setUser, storageUser, logout } = useContext(AuthContext)
 
   const [avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl)
+  const [name, setName] = useState(user && user.nome)
+  const [email, setEmail] = useState(user && user.email)
 
   return (
     <div>
@@ -49,17 +51,23 @@ const Profile = () => {
             </label>
 
             <label>Name</label>
-            <input type="text" placeholder="Your Name" />
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
             <label>Email</label>
-            <input type="email" placeholder="email@email.com" disabled />
+            <input type="email" value={email} disabled />
 
             <input type="submit" value="Save" />
           </form>
         </div>
 
         <div className="container">
-          <button className="logout-btn">Logout</button>
+          <button className="logout-btn" onClick={() => logout()}>
+            Logout
+          </button>
         </div>
       </div>
     </div>
