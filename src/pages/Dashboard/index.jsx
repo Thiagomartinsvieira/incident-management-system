@@ -3,6 +3,8 @@ import { AuthContext } from '../../contexts/Auth'
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
 
+import './Dashboard.css'
+
 export default function Dashboard() {
   const { logout } = useContext(AuthContext)
 
