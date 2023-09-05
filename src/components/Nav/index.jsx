@@ -1,14 +1,14 @@
 import './Nav.css'
-import { FaUser, FaArrowCircleDown } from 'react-icons/fa'
+import { FiUser, FiArrowDownCircle } from 'react-icons/fi'
 
 const Nav = () => {
   return (
     <div className="nav">
       <h2>Help Desk</h2>
       <div className="user-info">
-        <FaUser />
+        <FiUser />
         <h3>logged in user</h3>
-        <FaArrowCircleDown size={10}/>
+        <FiArrowDownCircle size={20} />
       </div>
     </div>
   )
