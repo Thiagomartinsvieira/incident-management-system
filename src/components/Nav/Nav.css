@@ -1,0 +1,21 @@
+.nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #293E40;
+    color: #fff;
+}
+
+.nav h2 {
+    margin: 10px 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.user-info svg {
+    margin: 0 6px;
+}
