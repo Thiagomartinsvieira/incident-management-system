@@ -10,6 +10,9 @@ import { useContext, useState } from 'react'
 import './Profile.css'
 import { toast } from 'react-toastify'
 
+import { db, storage } from '../../services/firebaseConnection'
+import { doc, updateDoc } from 'firebase/firestore'
+
 const Profile = () => {
   const { user, setUser, storageUser, logout } = useContext(AuthContext)
 
@@ -38,6 +41,26 @@ const Profile = () => {
     }
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    if (imageAvatar === null && name !== '') {
+      // change just name
+      const docRef = doc(db, 'users', user.uid)
+      await updateDoc(docRef, {
+        nome: name,
+      }).then(() => {
+        let data = {
+          ...user,
+          nome: name,
+        }
+        setUser(data)
+        storageUser(data)
+        toast.success('updated name!')
+      })
+    }
+  }
+
   return (
     <div>
       <Nav />
@@ -49,7 +72,7 @@ const Profile = () => {
         </Title>
 
         <div className="container">
-          <form className="form-profile">
+          <form className="form-profile" onSubmit={handleSubmit}>
             <label className="label-avatar">
               <span>
                 <FiUpload color="#fff" size={25} />
