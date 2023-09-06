@@ -2,7 +2,7 @@
     width: 200px;
     margin: 0;
     padding: 0;
-    background-color: #293E40;
+    background-color: #00618A;
     position: fixed;
     height: 100%;
     overflow: auto;
@@ -10,7 +10,7 @@
 
 .sidebar div {
     background: url(https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGVjaG5vbG9neXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60);
-    background-color: #293E40;
+    background-color: #00618A;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -48,7 +48,7 @@
 }
 
 .sidebar a:hover {
-    background-color: #243638;
+    background-color: #005478;
     color: #fff;
 }
 
