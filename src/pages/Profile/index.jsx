@@ -8,13 +8,35 @@ import { AuthContext } from '../../contexts/Auth'
 import { useContext, useState } from 'react'
 
 import './Profile.css'
+import { toast } from 'react-toastify'
 
 const Profile = () => {
   const { user, setUser, storageUser, logout } = useContext(AuthContext)
 
   const [avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl)
+  const [imageAvatar, setImageAvatar] = useState(null)
+
   const [name, setName] = useState(user && user.nome)
   const [email, setEmail] = useState(user && user.email)
+
+  const handleFile = (e) => {
+    if (e.target.files[0]) {
+      const image = e.target.files[0]
+
+      if (
+        image.type === 'image/jpeg' ||
+        image.type === 'image/png' ||
+        image.type === 'image/webp'
+      ) {
+        setImageAvatar(image)
+        setAvatarUrl(URL.createObjectURL(image))
+      } else {
+        toast.error('upload a png, jpeg or webp image')
+        setImageAvatar(null)
+        return
+      }
+    }
+  }
 
   return (
     <div>
@@ -32,7 +54,8 @@ const Profile = () => {
               <span>
                 <FiUpload color="#fff" size={25} />
               </span>
-              <input type="file" accept="image/*" /> <br />
+              <input type="file" accept="image/*" onChange={handleFile} />{' '}
+              <br />
               {avatarUrl === null ? (
                 <img
                   src={avatar}
