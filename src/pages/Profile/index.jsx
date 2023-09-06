@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 
 import { db, storage } from '../../services/firebaseConnection'
 import { doc, updateDoc } from 'firebase/firestore'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 const Profile = () => {
   const { user, setUser, storageUser, logout } = useContext(AuthContext)
@@ -41,6 +42,33 @@ const Profile = () => {
     }
   }
 
+  const handleUpload = async () => {
+    const currentUid = user.uid
+
+    const uploadRef = ref(storage, `images/${currentUid}/${imageAvatar.name}`)
+
+    const uploadTask = uploadBytes(uploadRef, imageAvatar).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then(async (downloadUrl) => {
+        let urlPhoto = downloadUrl
+
+        const docRef = doc(db, 'users', user.uid)
+        await updateDoc(docRef, {
+          avatarUrl: urlPhoto,
+          nome: name,
+        }).then(() => {
+          let data = {
+            ...user,
+            nome: name,
+            avatarUrl: urlPhoto,
+          }
+          setUser(data)
+          storageUser(data)
+          toast.success('updated with!')
+        })
+      })
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -58,6 +86,9 @@ const Profile = () => {
         storageUser(data)
         toast.success('updated name!')
       })
+    } else if (name !== '' && imageAvatar !== null) {
+      // update name and photo
+      handleUpload()
     }
   }
 
