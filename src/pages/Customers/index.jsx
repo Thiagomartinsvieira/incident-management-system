@@ -5,15 +5,38 @@ import Title from '../../components/Title'
 
 import { FiUser } from 'react-icons/fi'
 
+import { db } from '../../services/firebaseConnection'
+import { addDoc, collection } from 'firebase/firestore'
+
+import { toast } from 'react-toastify'
+
 const Customers = () => {
   const [name, setName] = useState('')
   const [cnpj, setCnpj] = useState('')
   const [address, setAddress] = useState('')
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault()
 
-    alert('test')
+    if (name !== '' && cnpj !== '' && address !== '') {
+      await addDoc(collection(db, 'customers'), {
+        nameFantasy: name,
+        cnpj: cnpj,
+        address: address,
+      })
+        .then(() => {
+          setName('')
+          setCnpj('')
+          setAddress('')
+          toast.success('registered company!')
+        })
+        .catch((error) => {
+          console.log(error)
+          toast.error('Error when registering')
+        })
+    } else {
+      toast.error('Fill in all fields')
+    }
   }
 
   return (
