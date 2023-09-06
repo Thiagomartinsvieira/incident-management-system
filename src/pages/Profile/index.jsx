@@ -1,9 +1,9 @@
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
 import Title from '../../components/Title'
+import avatar from '../../assets/avatar.png'
 
 import { FiSettings, FiUpload } from 'react-icons/fi'
-import avatar from '../../assets/avatar.png'
 import { AuthContext } from '../../contexts/Auth'
 import { useContext, useState } from 'react'
 
@@ -108,7 +108,7 @@ const Profile = () => {
               <span>
                 <FiUpload color="#fff" size={25} />
               </span>
-              <input type="file" accept="image/*" onChange={handleFile} />{' '}
+              <input type="file" accept="image/*" onChange={handleFile} />
               <br />
               {avatarUrl === null ? (
                 <img
