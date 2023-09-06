@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
 import Title from '../../components/Title'
@@ -6,6 +6,16 @@ import Title from '../../components/Title'
 import { FiUser } from 'react-icons/fi'
 
 const Customers = () => {
+  const [name, setName] = useState('')
+  const [cnpj, setCnpj] = useState('')
+  const [address, setAddress] = useState('')
+
+  const handleRegister = (e) => {
+    e.preventDefault()
+
+    alert('test')
+  }
+
   return (
     <div>
       <Nav />
@@ -15,6 +25,33 @@ const Customers = () => {
         <Title name="Customers">
           <FiUser size={25} />
         </Title>
+
+        <div className="container">
+          <form className="form-profile" onSubmit={handleRegister}>
+            <label>Name Fantasy</label>
+            <input
+              type="text"
+              placeholder="Company Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <label>CNPJ</label>
+            <input
+              type="text"
+              placeholder="type your cnpj"
+              value={cnpj}
+              onChange={(e) => setCnpj(e.target.value)}
+            />
+            <label>Adress</label>
+            <input
+              type="text"
+              placeholder="Company Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+            <input type="submit" value="Save" />
+          </form>
+        </div>
       </div>
     </div>
   )
