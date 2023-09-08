@@ -7,6 +7,7 @@ import Profile from '../pages/Profile'
 
 import Private from './Private'
 import Customers from '../pages/Customers'
+import NewTicket from '../pages/NewTicket'
 
 function RoutesApp() {
   return (
@@ -35,6 +36,14 @@ function RoutesApp() {
         element={
           <Private>
             <Customers />
+          </Private>
+        }
+      />
+      <Route
+        path="/newticket"
+        element={
+          <Private>
+            <NewTicket />
           </Private>
         }
       />

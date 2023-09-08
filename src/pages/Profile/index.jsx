@@ -63,7 +63,7 @@ const Profile = () => {
           }
           setUser(data)
           storageUser(data)
-          toast.success('updated with!')
+          toast.success('updated with sucess!')
         })
       })
     })
