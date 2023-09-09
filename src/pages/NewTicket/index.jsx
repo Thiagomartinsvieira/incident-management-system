@@ -7,7 +7,6 @@ import { AuthContext } from '../../contexts/Auth'
 import { db } from '../../services/firebaseConnection'
 import { collection, getDocs, getDoc, doc, addDoc } from 'firebase/firestore'
 
-
 import './NewTicket.css'
 import { toast } from 'react-toastify'
 
@@ -33,7 +32,7 @@ const NewTicket = () => {
           snapshot.forEach((doc) => {
             list.push({
               id: doc.id,
-              nameFantasy: doc.data().nameFantasy
+              nameFantasy: doc.data().nameFantasy,
             })
           })
 
@@ -46,7 +45,6 @@ const NewTicket = () => {
 
           setCustomers(list)
           setLoadCustomer(false)
-
         })
         .catch((error) => {
           console.log('error when searching for customers', error)
@@ -65,19 +63,18 @@ const NewTicket = () => {
 
   const handleChangeSelect = (e) => {
     setSubject(e.target.value)
-
   }
 
   const handleChangeCustomer = (e) => {
     setCustomerSelected(e.target.value)
-    console.log(customers[e.target.value].nameFantasy);
+    console.log(customers[e.target.value].nameFantasy)
   }
 
-  const handleRegister = async(e) => {
+  const handleRegister = async (e) => {
     e.preventDefault()
 
     // Register ticket
-    await addDoc(collection(db, "tickets"), {
+    await addDoc(collection(db, 'tickets'), {
       created: new Date(),
       client: customers[customerSelected].nameFantasy,
       clientId: customers[customerSelected].id,
@@ -86,16 +83,16 @@ const NewTicket = () => {
       status: status,
       userId: user.uid,
     })
-    .then(() => {
-      toast.success('Registered ticket!')
-      setComplement('')
-      setCustomerSelected(0)
-    })
-    .catch((error) => {
-      console.log(error)
-      toast.error('Oops, error registering ticket')
-    })
-  } 
+      .then(() => {
+        toast.success('Registered ticket!')
+        setComplement('')
+        setCustomerSelected(0)
+      })
+      .catch((error) => {
+        console.log(error)
+        toast.error('Oops, error registering ticket')
+      })
+  }
 
   return (
     <div>
@@ -108,21 +105,19 @@ const NewTicket = () => {
         <div className="container">
           <form className="form-profile" onSubmit={handleRegister}>
             <label>Clients</label>
-            {
-              loadCustomer ? (
-                <input type='text' disabled value="Loading..." />
-              ) : (
-                <select value={customerSelected} onChange={handleChangeCustomer}>
-                  {customers.map((item, index) => {
-                    return (
-                      <option key={index} value={index}>
-                        {item.nameFantasy}
-                      </option>
-                    )
-                  })}
-                </select>
-              )
-            }
+            {loadCustomer ? (
+              <input type="text" disabled value="Loading..." />
+            ) : (
+              <select value={customerSelected} onChange={handleChangeCustomer}>
+                {customers.map((item, index) => {
+                  return (
+                    <option key={index} value={index}>
+                      {item.nameFantasy}
+                    </option>
+                  )
+                })}
+              </select>
+            )}
 
             <label>subject</label>
             <select value={subject} onChange={handleChangeSelect}>
