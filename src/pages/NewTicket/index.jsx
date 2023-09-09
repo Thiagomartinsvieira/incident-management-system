@@ -5,10 +5,11 @@ import Title from '../../components/Title'
 import { FiPlusCircle } from 'react-icons/fi'
 import { AuthContext } from '../../contexts/Auth'
 import { db } from '../../services/firebaseConnection'
-import { collection, getDocs, getDoc, doc } from 'firebase/firestore'
+import { collection, getDocs, getDoc, doc, addDoc } from 'firebase/firestore'
 
 
 import './NewTicket.css'
+import { toast } from 'react-toastify'
 
 const listRef = collection(db, 'customers')
 
@@ -72,6 +73,30 @@ const NewTicket = () => {
     console.log(customers[e.target.value].nameFantasy);
   }
 
+  const handleRegister = async(e) => {
+    e.preventDefault()
+
+    // Register ticket
+    await addDoc(collection(db, "tickets"), {
+      created: new Date(),
+      client: customers[customerSelected].nameFantasy,
+      clientId: customers[customerSelected].id,
+      subject: subject,
+      complement: complement,
+      status: status,
+      userId: user.uid,
+    })
+    .then(() => {
+      toast.success('Registered ticket!')
+      setComplement('')
+      setCustomerSelected(0)
+    })
+    .catch((error) => {
+      console.log(error)
+      toast.error('Oops, error registering ticket')
+    })
+  } 
+
   return (
     <div>
       <Nav />
@@ -81,7 +106,7 @@ const NewTicket = () => {
           <FiPlusCircle size={25} />
         </Title>
         <div className="container">
-          <form className="form-profile">
+          <form className="form-profile" onSubmit={handleRegister}>
             <label>Clients</label>
             {
               loadCustomer ? (
