@@ -56,12 +56,11 @@ export default function Dashboard() {
                   >
                     <FiSearch color="#ffff" size={17} />
                   </button>
-                  <button className="action">
-                    <FiEdit2
-                      color="#ffff"
-                      size={17}
-                      style={{ backgroundColor: '#f6a935' }}
-                    />
+                  <button
+                    className="action"
+                    style={{ backgroundColor: '#f6a935' }}
+                  >
+                    <FiEdit2 color="#FFF" size={17} />
                   </button>
                 </td>
               </tr>
@@ -82,12 +81,11 @@ export default function Dashboard() {
                   >
                     <FiSearch color="#ffff" size={17} />
                   </button>
-                  <button className="action">
-                    <FiEdit2
-                      color="#ffff"
-                      size={17}
-                      style={{ backgroundColor: '#f6a935' }}
-                    />
+                  <button
+                    className="action"
+                    style={{ backgroundColor: '#f6a935' }}
+                  >
+                    <FiEdit2 color="#FFF" size={17} />
                   </button>
                 </td>
               </tr>
