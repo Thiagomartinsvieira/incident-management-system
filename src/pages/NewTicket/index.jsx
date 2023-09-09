@@ -17,21 +17,42 @@ const NewTicket = () => {
 
   const [customers, setCustomers] = useState([])
   const [loadCustomer, setLoadCustomer] = useState(true)
+  const [customerSelected, setCustomerSelected] = useState(0)
 
   const [complement, setComplement] = useState('')
   const [subject, setSubject] = useState('Support')
   const [status, setStatus] = useState('Open')
 
   useEffect(() => {
-    const loadCustomers = async() => {
+    const loadCustomers = async () => {
       const querySnapshot = await getDocs(listRef)
-      .then(() => {
+        .then((snapshot) => {
+          let list = []
 
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-    } 
+          snapshot.forEach((doc) => {
+            list.push({
+              id: doc.id,
+              nameFantasy: doc.data().nameFantasy
+            })
+          })
+
+          if (snapshot.docs.size === 0) {
+            console.log('No companies found')
+            setCustomers([{ id: '1', nameFantasy: 'FREELA' }])
+            setLoadCustomer(false)
+            return
+          }
+
+          setCustomers(list)
+          setLoadCustomer(false)
+
+        })
+        .catch((error) => {
+          console.log('error when searching for customers', error)
+          setLoadCustomer(false)
+          setCustomers([{ id: '1', nameFantasy: 'FREELA' }])
+        })
+    }
 
     loadCustomers()
   }, [])
@@ -43,7 +64,12 @@ const NewTicket = () => {
 
   const handleChangeSelect = (e) => {
     setSubject(e.target.value)
-    
+
+  }
+
+  const handleChangeCustomer = (e) => {
+    setCustomerSelected(e.target.value)
+    console.log(customers[e.target.value].nameFantasy);
   }
 
   return (
@@ -57,14 +83,21 @@ const NewTicket = () => {
         <div className="container">
           <form className="form-profile">
             <label>Clients</label>
-            <select>
-              <option key={1} value={1}>
-                Supermake good mornig
-              </option>
-              <option key={2} value={2}>
-                auto parts
-              </option>
-            </select>
+            {
+              loadCustomer ? (
+                <input type='text' disabled value="Loading..." />
+              ) : (
+                <select value={customerSelected} onChange={handleChangeCustomer}>
+                  {customers.map((item, index) => {
+                    return (
+                      <option key={index} value={index}>
+                        {item.nameFantasy}
+                      </option>
+                    )
+                  })}
+                </select>
+              )
+            }
 
             <label>subject</label>
             <select value={subject} onChange={handleChangeSelect}>
