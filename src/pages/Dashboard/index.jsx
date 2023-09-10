@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../contexts/Auth'
+import Nav from '../../components/Nav'
 import Header from '../../components/Header'
 import Title from '../../components/Title'
-import Nav from '../../components/Nav'
 import { FiPlus, FiMessageSquare, FiSearch, FiEdit2 } from 'react-icons/fi'
+
+import { Link } from 'react-router-dom'
 import {
   collection,
   getDocs,
@@ -13,7 +15,6 @@ import {
   query,
 } from 'firebase/firestore'
 import { db } from '../../services/firebaseConnection'
-import { Link } from 'react-router-dom'
 
 import { format } from 'date-fns'
 
@@ -29,11 +30,12 @@ export default function Dashboard() {
   const [isEmpty, setIsEmpty] = useState(false)
 
   useEffect(() => {
-    const loadTickets = async () => {
+    async function loadTickets() {
       const q = query(listRef, orderBy('created', 'desc'), limit(5))
 
       const querySnapshot = await getDocs(q)
       setTickets([])
+
       await updateState(querySnapshot)
 
       setLoading(false)
@@ -44,10 +46,10 @@ export default function Dashboard() {
     return () => { }
   }, [])
 
-  const updateState = async (querySnapshot) => {
-    const isColletionEmpty = querySnapshot.size === 0
+  async function updateState(querySnapshot) {
+    const isCollectionEmpty = querySnapshot.size === 0
 
-    if (isColletionEmpty) {
+    if (!isCollectionEmpty) {
       let list = []
 
       querySnapshot.forEach((doc) => {
@@ -55,11 +57,11 @@ export default function Dashboard() {
           id: doc.id,
           subject: doc.data().subject,
           client: doc.data().client,
-          clientId: doc.data().clientId,
+          clienteId: doc.data().clientId,
           created: doc.data().created,
           createdFormat: format(doc.data().created.toDate(), 'dd/MM/yyyy'),
           status: doc.data().status,
-          complement: doc.data().complement,
+          complemento: doc.data().complement,
         })
       })
 
@@ -73,13 +75,14 @@ export default function Dashboard() {
     return (
       <div>
         <Header />
+
         <div className="content">
           <Title name="Tickets">
             <FiMessageSquare size={25} />
           </Title>
 
           <div className="container dashboard">
-            <span>searching for tickets</span>
+            <span>searching for tickets...</span>
           </div>
         </div>
       </div>
@@ -95,21 +98,23 @@ export default function Dashboard() {
         <Title name="Tickets">
           <FiMessageSquare size={25} />
         </Title>
+
         <>
           {tickets.length === 0 ? (
             <div className="container dashboard">
               <span>No tickets found...</span>
-              <Link to="/newTicket" className="new">
-                <FiPlus color="#fff" size={25} />
-                Open New Ticket
+              <Link to="/new" className="new">
+                <FiPlus color="#FFF" size={25} />
+                New Ticket
               </Link>
             </div>
           ) : (
             <>
-              <Link to="/newTicket" className="new">
-                <FiPlus color="#fff" size={25} />
-                Open New Ticket
+              <Link to="/newticket" className="newticket">
+                <FiPlus color="#FFF" size={25} />
+                New Ticket
               </Link>
+
               <table>
                 <thead>
                   <tr>
@@ -124,9 +129,9 @@ export default function Dashboard() {
                   {tickets.map((item, index) => {
                     return (
                       <tr key={index}>
-                        <td data-label="client">{item.client}</td>
-                        <td data-label="Subject">{item.subject}</td>
-                        <td data-label="status">
+                        <td data-label="Cliente">{item.client}</td>
+                        <td data-label="Assunto">{item.subject}</td>
+                        <td data-label="Status">
                           <span
                             className="badge"
                             style={{ backgroundColor: '#999' }}
@@ -134,13 +139,13 @@ export default function Dashboard() {
                             {item.status}
                           </span>
                         </td>
-                        <td data-label="registered in">{item.createdFormat}</td>
+                        <td data-label="Cadastrado">{item.createdFormat}</td>
                         <td data-label="#">
                           <button
                             className="action"
                             style={{ backgroundColor: '#3583f6' }}
                           >
-                            <FiSearch color="#ffff" size={17} />
+                            <FiSearch color="#FFF" size={17} />
                           </button>
                           <button
                             className="action"

@@ -1,5 +1,4 @@
-
-.new{
+.newticket{
     float: right;
     margin-bottom: 1.5em;
     background-color: #83bf02;
@@ -14,11 +13,11 @@
     transition: ease-in-out 0.3s;
   }
   
-  .new svg{
+  .newticket svg{
     margin-right: 5px;
   }
   
-  .new:hover{
+  .newticket:hover{
     background-color: #5fd204;
     transform: scale(1.02);
   }
