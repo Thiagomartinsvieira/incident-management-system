@@ -47,6 +47,15 @@ function RoutesApp() {
           </Private>
         }
       />
+
+      <Route
+        path="/newticket/:id"
+        element={
+          <Private>
+            <NewTicket />
+          </Private>
+        }
+      />
     </Routes>
   )
 }
