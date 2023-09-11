@@ -20,7 +20,7 @@ import { toast } from 'react-toastify'
 
 const listRef = collection(db, 'customers')
 
-const navigate = useNavigate()
+const navigate = useNavigate
 
 const NewTicket = () => {
   const { user } = useContext(AuthContext)
