@@ -1,0 +1,49 @@
+/* Footer.css */
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+#footer {
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  flex-shrink: 0; /* Prevent footer from shrinking */
+  margin-top: 100vh; /* Pushes the footer to the bottom */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 20px;
+  max-width: 100%;
+}
+
+.footer-container {
+  flex: 1;
+}
+
+h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.footerrc-social {
+  display: flex;
+  gap: 10px;
+}
+
+.social-icon {
+  text-decoration: none;
+  color: white;
+  transition: opacity 0.3s;
+}
+
+.social-icon:hover {
+  opacity: 0.8;
+}
