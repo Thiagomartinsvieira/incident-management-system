@@ -15,7 +15,7 @@ const Nav = () => {
           src={user.avatarUrl === null ? avatarImg : user.avatarUrl}
           alt="image user"
         />
-        <h3>logged in user</h3>
+        <h3>{user.nome}</h3>
         <FiArrowDownCircle size={20} />
       </div>
     </div>
