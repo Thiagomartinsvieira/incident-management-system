@@ -123,7 +123,6 @@ const NewTicket = () => {
         .then(() => {
           toast.info('ticket Updated!')
           setCustomerSelected(0)
-          setComplement('')
           navigate('/dashboard')
         })
         .catch((error) => {

@@ -34,6 +34,9 @@ export default function Dashboard() {
   const [lastDocs, setLastDocs] = useState()
   const [loadingMore, setLoadingMore] = useState(false)
 
+  const [showPostModal, setShowPostModal] = useState(false)
+  const [details, setDetails] = useState()
+
   useEffect(() => {
     async function loadTickets() {
       const q = query(listRef, orderBy('created', 'desc'), limit(5))
@@ -92,6 +95,11 @@ export default function Dashboard() {
     )
     const querySnapshot = await getDocs(q)
     await updateState(querySnapshot)
+  }
+
+  const toogleModal = (item) => {
+    setShowPostModal(!showPostModal)
+    setDetails(item)
   }
 
   if (loading) {
@@ -170,6 +178,7 @@ export default function Dashboard() {
                           <button
                             className="action"
                             style={{ backgroundColor: '#3583f6' }}
+                            onClick={() => toogleModal(item)}
                           >
                             <FiSearch color="#FFF" size={17} />
                           </button>
@@ -198,7 +207,12 @@ export default function Dashboard() {
         </>
       </div>
 
-      <Modal />
+      {showPostModal && (
+        <Modal
+          content={details}
+          close={() => setShowPostModal(!showPostModal)}
+        />
+      )}
     </div>
   )
 }
