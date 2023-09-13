@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import Nav from '../../components/Nav'
 import Title from '../../components/Title'
 import { FiPlusCircle } from 'react-icons/fi'
@@ -236,6 +237,7 @@ const NewTicket = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
