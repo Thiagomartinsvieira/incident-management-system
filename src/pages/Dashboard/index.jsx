@@ -17,10 +17,11 @@ import {
 import { db } from '../../services/firebaseConnection'
 
 import { format } from 'date-fns'
-
+import Footer from '../../components/Footer'
 import Modal from '../../components/Modal'
 
 import './Dashboard.css'
+
 
 const listRef = collection(db, 'tickets')
 
@@ -206,6 +207,7 @@ export default function Dashboard() {
           )}
         </>
       </div>
+      <Footer />
 
       {showPostModal && (
         <Modal
