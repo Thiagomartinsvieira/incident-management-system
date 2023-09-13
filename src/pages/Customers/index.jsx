@@ -3,7 +3,7 @@ import Header from '../../components/Header'
 import Nav from '../../components/Nav'
 import Title from '../../components/Title'
 
-import { FiUser } from 'react-icons/fi'
+import { FiStar } from 'react-icons/fi'
 
 import { db } from '../../services/firebaseConnection'
 import { addDoc, collection } from 'firebase/firestore'
@@ -46,7 +46,7 @@ const Customers = () => {
 
       <div className="content">
         <Title name="Customers">
-          <FiUser size={25} />
+          <FiStar size={25} />
         </Title>
 
         <div className="container">
