@@ -57,6 +57,18 @@
     padding: 1px 16px;
 }
 
+.logout-btn-sidebar {
+    margin: auto 10px;
+    position: absolute;
+    bottom: 7vh;
+    text-align: center;
+    transition: ease-in-out 0.4s;
+}
+
+.logout-btn-sidebar:hover{
+    background-color: darkkhaki;
+}
+
 @media screen and (max-width: 700px) {
     .sidebar {
         width: 100%;
