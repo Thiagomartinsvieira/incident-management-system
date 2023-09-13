@@ -13,13 +13,13 @@ function Footer() {
             href="https://www.linkedin.com/in/thiago-martins-vieira-074550192/"
             className="social-icon"
           >
-            <FaLinkedin size={35} color="white" />
+            <FaLinkedin size={30} color="white" />
           </a>
           <a
             href="https://github.com/Thiagomartinsvieira"
             className="social-icon"
           >
-            <FaGithub size={35} color="white" />
+            <FaGithub size={30} color="white" />
           </a>
         </div>
       </div>
