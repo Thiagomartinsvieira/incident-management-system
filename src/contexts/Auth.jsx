@@ -51,10 +51,12 @@ function AuthProvider({ children }) {
           avatarUrl: docSnap.data().avatarUrl,
         }
 
+        const firstName = data.nome.split(' ')[0]
+
         setUser(data)
         storageUser(data)
         setLoadingAuth(false)
-        toast.success('welcome back')
+        toast.success(`Welcome back ${firstName}`)
         navigate('/dashboard')
       })
       .catch((error) => {
