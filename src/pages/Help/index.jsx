@@ -23,7 +23,6 @@ const Help = () => {
           </div>
         </div>
 
-        
         <div className="useful-info">
           <h2>Plataforma de Sistema de Chamados</h2>
           <br />
