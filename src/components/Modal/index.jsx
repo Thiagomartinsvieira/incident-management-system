@@ -1,16 +1,16 @@
-import './Modal.css'
 import { FiX } from 'react-icons/fi'
+import './Modal.css'
 
-const Modal = ({ content, close }) => {
+export default function Modal({ content, close }) {
   return (
     <div className="modal">
       <div className="container">
         <button className="close" onClick={close}>
-          <FiX size={25} color="#fff" />
+          <FiX size={25} color="#FFF" />
         </button>
 
         <main>
-          <h2>Tickets Details</h2>
+          <h2>Detalhes do chamado</h2>
 
           <div className="row">
             <span>
@@ -23,25 +23,26 @@ const Modal = ({ content, close }) => {
               Subject: <i>{content.subject}</i>
             </span>
             <span>
-              Registered in: <i>{content.createdFormat}</i>
+              Cadastrado em: <i>{content.createdFormat}</i>
             </span>
           </div>
 
           <div className="row">
             <span>
-              Status:{' '}
+              Status:
               <i
                 className="status-badge"
                 style={{
-                  color: '#fff',
+                  color: '#FFF',
                   backgroundColor:
-                    content.status === 'Open' ? '#5cb85c' : '#999',
+                    content.status === 'Aberto' ? '#5cb85c' : '#999',
                 }}
               >
                 {content.status}
               </i>
             </span>
           </div>
+
           {content.complement !== '' && (
             <>
               <h3>Complement</h3>
@@ -53,5 +54,3 @@ const Modal = ({ content, close }) => {
     </div>
   )
 }
-
-export default Modal
