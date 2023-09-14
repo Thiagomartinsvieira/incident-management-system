@@ -43,6 +43,12 @@ input[type="submit"] {
   color: #ccc;
 }
 
+button[type="submit"] {
+  cursor: pointer;
+  background-color: #007bff;
+  color: #ccc;
+}
+
 
 .container-center {
   display: flex;
