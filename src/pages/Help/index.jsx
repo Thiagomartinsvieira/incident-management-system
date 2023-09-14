@@ -23,7 +23,7 @@ const Help = () => {
           </div>
         </div>
 
-        {/* Informações úteis sobre a plataforma de sistema de chamados */}
+        
         <div className="useful-info">
           <h2>Plataforma de Sistema de Chamados</h2>
           <br />
@@ -37,7 +37,7 @@ const Help = () => {
           <p>
             Se você tiver alguma dúvida ou precisar de assistência, não hesite
             em entrar em contato com nossa equipe de suporte pelo{' '}
-            <a href="/contato">formulário de contato</a> ou pelo telefone (123)
+            <a href="/contact">formulário de contato</a> ou pelo telefone (123)
             456-7890.
           </p>
         </div>
