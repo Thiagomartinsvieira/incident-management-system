@@ -4,7 +4,16 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../contexts/Auth'
-import { FiHome, FiUser, FiSettings, FiLogOut, FiStar, FiHelpCircle, FiFile, FiFileText, FiPlusCircle } from 'react-icons/fi'
+import {
+  FiUser,
+  FiSettings,
+  FiLogOut,
+  FiStar,
+  FiHelpCircle,
+  FiFileText,
+  FiPlusCircle,
+  FiPhoneCall,
+} from 'react-icons/fi'
 import './Header.css'
 
 const Header = () => {
@@ -40,6 +49,10 @@ const Header = () => {
       <Link to="/help">
         <FiHelpCircle color="#fff" size={24} />
         Help
+      </Link>
+      <Link to="/contact">
+        <FiPhoneCall color="#fff" size={24} />
+        Contact
       </Link>
       <Link to="/settings">
         <FiSettings color="#fff" size={24} />
