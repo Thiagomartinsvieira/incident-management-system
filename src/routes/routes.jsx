@@ -8,6 +8,9 @@ import Profile from '../pages/Profile'
 import Private from './Private'
 import Customers from '../pages/Customers'
 import NewTicket from '../pages/NewTicket'
+import Settings from '../pages/Settings'
+import Help from '../pages/Help'
+import Contact from '../pages/Contact'
 
 function RoutesApp() {
   return (
@@ -44,6 +47,33 @@ function RoutesApp() {
         element={
           <Private>
             <NewTicket />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/settings"
+        element={
+          <Private>
+            <Settings />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/help"
+        element={
+          <Private>
+            <Help />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/contact"
+        element={
+          <Private>
+            <Contact />
           </Private>
         }
       />
