@@ -70,7 +70,7 @@ export default function Dashboard() {
           created: doc.data().created,
           createdFormat: format(doc.data().created.toDate(), 'dd/MM/yyyy'),
           status: doc.data().status,
-          complemento: doc.data().complement,
+          complement: doc.data().complement,
         })
       })
 
