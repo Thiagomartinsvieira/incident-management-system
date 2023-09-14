@@ -1,0 +1,29 @@
+.help {
+   
+}
+
+.container input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    width: 30em; 
+}
+
+.container button[type="submit"] {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer; 
+    margin-left: .3em;
+}
+
+.container button[type="submit"] svg {
+    margin-left: 4px;
+}
+
