@@ -1,0 +1,26 @@
+/* Adicione este CSS ao seu arquivo de estilo ou módulo CSS */
+.contact-container {
+    display: flex;
+    align-items: flex-start; 
+  }
+  
+  .form-profile {
+    flex: 1; 
+    padding-right: 20px;
+  }
+  
+  .vertical-line {
+    border-right: 1px solid #ccc; 
+    margin-right: 20px; 
+    height: 43vh; 
+  }
+  
+  .additional-info {
+    flex: 1; 
+  }
+
+  .additional-info  h2, .additional-info h4 {
+    margin-bottom: 1.5em;
+  }
+  
+ 
