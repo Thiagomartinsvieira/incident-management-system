@@ -21,8 +21,6 @@ import { toast } from 'react-toastify'
 
 const listRef = collection(db, 'customers')
 
-const navigate = useNavigate
-
 const NewTicket = () => {
   const { user } = useContext(AuthContext)
   const { id } = useParams()
@@ -36,6 +34,8 @@ const NewTicket = () => {
   const [subject, setSubject] = useState('Support')
   const [status, setStatus] = useState('Open')
   const [idCustomer, setIdCustomer] = useState(false)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const loadCustomers = async () => {
@@ -157,11 +157,11 @@ const NewTicket = () => {
         setComplement('')
         setCustomerSelected(0)
         setLoadCustomer(false)
+        navigate('/dashboard')
       })
       .catch((error) => {
         console.log(error)
         toast.error('Oops, error registering ticket')
-        setLoadCustomer(false)
       })
   }
 
