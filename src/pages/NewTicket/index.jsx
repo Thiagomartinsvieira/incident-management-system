@@ -182,10 +182,33 @@ const NewTicket = () => {
 
             <label>subject</label>
             <select value={subject} onChange={handleChangeSelect}>
-              <option value="equipment change">Access</option>
-              <option value="equipment change">equipment change</option>
-              <option value="remote support">remote support</option>
-              <option value="technical visit">technical visit</option>
+              <option value="equipment change">Equipment change</option>
+              <option value="remote support">Remote support</option>
+              <option value="technical visit">Technical visit</option>
+              <option value="network issues">Network issues</option>
+              <option value="software problems">Software problems</option>
+              <option value="hardware failure">Hardware failure</option>
+              <option value="security issues">Security issues</option>
+              <option value="training request">Training request</option>
+              <option value="system error">System error</option>
+              <option value="login issue">Login issue</option>
+              <option value="email problem">Email problem</option>
+              <option value="software request">Software request</option>
+              <option value="hardware request">Hardware request</option>
+              <option value="printing problems">Printing problems</option>
+              <option value="application issues">Application issues</option>
+              <option value="data loss">Data loss</option>
+              <option value="data access issue">Data access issue</option>
+              <option value="connectivity problems">
+                Connectivity problems
+              </option>
+              <option value="software update">Software update</option>
+              <option value="permission request">Permission request</option>
+              <option value="performance issues">Performance issues</option>
+              <option value="configuration request">
+                Configuration request
+              </option>
+              <option value="other">Other</option>
             </select>
 
             <label>Status</label>
