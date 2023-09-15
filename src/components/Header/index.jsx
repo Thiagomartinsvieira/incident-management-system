@@ -13,6 +13,7 @@ import {
   FiFileText,
   FiPlusCircle,
   FiPhoneCall,
+  FiGithub,
 } from 'react-icons/fi'
 import './Header.css'
 
@@ -49,6 +50,10 @@ const Header = () => {
       <Link to="/help">
         <FiHelpCircle color="#fff" size={24} />
         Help
+      </Link>
+      <Link to="/about">
+        <FiGithub color="#fff" size={24} />
+        About
       </Link>
       <Link to="/contact">
         <FiPhoneCall color="#fff" size={24} />

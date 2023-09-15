@@ -11,6 +11,7 @@ import NewTicket from '../pages/NewTicket'
 import Settings from '../pages/Settings'
 import Help from '../pages/Help'
 import Contact from '../pages/Contact'
+import About from '../pages/About'
 
 function RoutesApp() {
   return (
@@ -56,6 +57,15 @@ function RoutesApp() {
         element={
           <Private>
             <Settings />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/about"
+        element={
+          <Private>
+            <About />
           </Private>
         }
       />
