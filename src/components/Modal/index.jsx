@@ -40,6 +40,14 @@ export default function Modal({ content, close }) {
               >
                 {content.status}
               </i>
+              <span>
+                Location:{' '}
+                <i>
+                  {content.customerLocation && (
+                    <i>{content.customerLocation}</i>
+                  )}
+                </i>
+              </span>
             </span>
           </div>
 

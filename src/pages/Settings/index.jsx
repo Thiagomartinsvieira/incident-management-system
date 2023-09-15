@@ -28,8 +28,6 @@ const Settings = () => {
 
   const handleDeleteAccount = () => {
     if (deleteAccountConfirm) {
-      
-
       navigate('/')
       toast.success('Your account has been deleted successfully.')
     } else {
