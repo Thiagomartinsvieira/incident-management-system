@@ -32,6 +32,7 @@ const NewTicket = () => {
   const [customerSelected, setCustomerSelected] = useState(0)
 
   const [complement, setComplement] = useState('')
+  const [customerLocation, setCustomerLocation] = useState('')
   const [subject, setSubject] = useState('Support')
   const [status, setStatus] = useState('Open')
   const [idCustomer, setIdCustomer] = useState(false)
@@ -107,6 +108,11 @@ const NewTicket = () => {
     console.log(customers[e.target.value].nameFantasy)
   }
 
+  const handleLocationSelect = (e) => {
+    setCustomerLocation(e.target.value)
+    console.log(e.target.value)
+  }
+
   const handleRegister = async (e) => {
     e.preventDefault()
 
@@ -120,6 +126,7 @@ const NewTicket = () => {
         complement: complement,
         status: status,
         userId: user.uid,
+        customerLocation: customerLocation, // Localização do cliente sendo enviada aqui
       })
         .then(() => {
           toast.info('ticket Updated!')
@@ -143,15 +150,18 @@ const NewTicket = () => {
       complement: complement,
       status: status,
       userId: user.uid,
+      customerLocation: customerLocation,
     })
       .then(() => {
         toast.success('Registered ticket!')
         setComplement('')
         setCustomerSelected(0)
+        setLoadCustomer(false)
       })
       .catch((error) => {
         console.log(error)
         toast.error('Oops, error registering ticket')
+        setLoadCustomer(false)
       })
   }
 
@@ -209,6 +219,17 @@ const NewTicket = () => {
                 Configuration request
               </option>
               <option value="other">Other</option>
+            </select>
+
+            <label>Location</label>
+            <select value={customerLocation} onChange={handleLocationSelect}>
+              <option value="sao paulo">São Paulo - SP (Brazil)</option>
+              <option value="rio de janeiro">
+                Rio de Janeiro - RJ (Brazil)
+              </option>
+              <option value="new york">New York - NY (USA)</option>
+              <option value="london">London (UK)</option>
+              <option value="tokyo">Tokyo (Japan)</option>
             </select>
 
             <label>Status</label>
