@@ -3,7 +3,14 @@ import { AuthContext } from '../../contexts/Auth'
 import Nav from '../../components/Nav'
 import Header from '../../components/Header'
 import Title from '../../components/Title'
-import { FiPlus, FiMessageSquare, FiSearch, FiEdit2 } from 'react-icons/fi'
+import {
+  FiPlus,
+  FiMessageSquare,
+  FiSearch,
+  FiEdit2,
+  FiTrash,
+  FiTrash2,
+} from 'react-icons/fi'
 
 import { Link } from 'react-router-dom'
 import {
@@ -70,10 +77,12 @@ export default function Dashboard() {
           createdFormat: format(doc.data().created.toDate(), 'dd/MM/yyyy'),
           status: doc.data().status,
           complement: doc.data().complement,
+          // Certifique-se de que a propriedade customerLocation exista nos dados do Firestore.
+          customerLocation: doc.data().customerLocation || '', // Pode ser uma string vazia se não existir
         })
       })
 
-      const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] // last
+      const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] // último documento
 
       setTickets((tickets) => [...tickets, ...list])
       setLastDocs(lastDoc)
@@ -95,11 +104,12 @@ export default function Dashboard() {
     )
     const querySnapshot = await getDocs(q)
     await updateState(querySnapshot)
+    setLoadingMore(false)
   }
 
-  const toogleModal = (item) => {
+  const toggleModal = (item) => {
     setShowPostModal(!showPostModal)
-    setDetails(item)
+    setDetails({ ...item, customerLocation: item.customerLocation })
   }
 
   if (loading) {
@@ -113,7 +123,7 @@ export default function Dashboard() {
           </Title>
 
           <div className="container dashboard">
-            <span>searching for tickets...</span>
+            <span>Procurando por tickets...</span>
           </div>
         </div>
       </div>
@@ -133,26 +143,26 @@ export default function Dashboard() {
         <>
           {tickets.length === 0 ? (
             <div className="container dashboard">
-              <span>No tickets found...</span>
+              <span>Nenhum ticket encontrado...</span>
               <Link to="/new" className="new">
                 <FiPlus color="#FFF" size={25} />
-                New Ticket
+                Novo Ticket
               </Link>
             </div>
           ) : (
             <>
               <Link to="/newticket" className="newticket">
                 <FiPlus color="#FFF" size={25} />
-                New Ticket
+                Novo Ticket
               </Link>
 
               <table>
                 <thead>
                   <tr>
-                    <th scope="col">Client</th>
-                    <th scope="col">Subject</th>
-                    <th scope="col">status</th>
-                    <th scope="col">registered in</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Assunto</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Registrado em</th>
                     <th scope="col">#</th>
                   </tr>
                 </thead>
@@ -167,18 +177,24 @@ export default function Dashboard() {
                             className="badge"
                             style={{
                               backgroundColor:
-                                item.status === 'Open' ? '#5cb85c' : '#999',
+                                item.status === 'Open'
+                                  ? '#5cb85c'
+                                  : item.status === 'Closed'
+                                    ? '#337ab7'
+                                    : item.status === 'Progress'
+                                      ? '#f0ad4e'
+                                      : '#d9534f',
                             }}
                           >
                             {item.status}
                           </span>
                         </td>
-                        <td data-label="Cadastrado">{item.createdFormat}</td>
+                        <td data-label="Registrado em">{item.createdFormat}</td>
                         <td data-label="#">
                           <button
                             className="action"
                             style={{ backgroundColor: '#3583f6' }}
-                            onClick={() => toogleModal(item)}
+                            onClick={() => toggleModal(item)}
                           >
                             <FiSearch color="#FFF" size={17} />
                           </button>
@@ -189,6 +205,13 @@ export default function Dashboard() {
                           >
                             <FiEdit2 color="#FFF" size={17} />
                           </Link>
+                          <Link
+                            to={`/newticket/${item.id}`}
+                            className="action"
+                            style={{ backgroundColor: 'red' }}
+                          >
+                            <FiTrash color="#FFF" size={17} />
+                          </Link>
                         </td>
                       </tr>
                     )
@@ -196,10 +219,9 @@ export default function Dashboard() {
                 </tbody>
               </table>
 
-              {loadingMore && <h3>looking for more tickets...</h3>}
               {!loadingMore && !isEmpty && (
                 <button className="btn-more" onClick={handleMore}>
-                  search for more
+                  Buscar mais
                 </button>
               )}
             </>
