@@ -1,3 +1,9 @@
+.container-settings{
+    display: flex;
+    flex-direction: column; 
+    gap: 20px;
+  }
+
 .toggle {
     position: relative;
     display: inline-block;
@@ -40,7 +46,65 @@ input:checked + .slider:before {
     transform: translateX(26px);
 }
 
+.delete-account-confirm {
+    background-color: #fff; 
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .delete-account-confirm p {
+    margin-bottom: 10px;
+  }
+  
+  .delete-account-confirm button {
+    background-color: #ff4d4f; 
+    color: #fff; 
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .delete-account-confirm button:last-child {
+    background-color: #f0f0f0;
+    color: #333; 
+  }
+  
+  .delete-account-confirm button:hover {
+    opacity: 0.8; 
+  }
+  
+  .delete-account {
+    background-color: #fff; 
+    border: 1px solid #e0e0e0; 
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .delete-account p {
+    margin-bottom: 10px;
+  }
+  
+  .delete-account button {
+    background-color: #ff4d4f; 
+    color: #fff; 
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
 
-.dark-mode .slider:before {
-    background-color: black; /* Cor da bolinha quando ativado no tema escuro */
-}
+
+  .delete-account button svg {
+    align-items: center;
+  }
+  
+  .delete-account button:hover {
+    opacity: 0.8; 
+  }
+  
+  
