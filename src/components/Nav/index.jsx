@@ -22,7 +22,7 @@ const Nav = () => {
   return (
     <div className="nav">
       <Link to="/dashboard">
-        <h2>Help Desk</h2>
+        <h2>Incident Management</h2>
       </Link>
       <div className="user-info" onClick={toggleMenu}>
         <img
