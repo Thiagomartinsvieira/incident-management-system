@@ -9,27 +9,17 @@
 }
 
 .sidebar div {
-    background: url(https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGVjaG5vbG9neXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60);
+    background: url(https://www.milldesk.com.br/wp-content/uploads/2019/03/helpdesk.jpeg);
     background-color: #00618A;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 150px;
+    height: 90px;
+    cursor: pointer;
 }
 
 .sidebar div {
     padding-top: 30px;
-}
-
-.sidebar div img {
-    width: 90px;
-    height: 90px;
-    display: block;
-    margin: auto;
-    border-radius: 50%;
-    object-fit: cover;
-    filter: drop-shadow(2px 3px 6px #121212);
-    -webkit-filter: drop-shadow(2px 3px 6px #121212);
 }
 
 .sidebar a {
@@ -60,13 +50,14 @@
 .logout-btn-sidebar {
     margin: auto 10px;
     position: absolute;
-    bottom: 7vh;
+    bottom: 8.5vh;
     text-align: center;
     transition: ease-in-out 0.4s;
 }
 
 .logout-btn-sidebar:hover{
-    background-color: darkkhaki;
+    background-color: #005478;
+    transform: scale(1.1);
 }
 
 @media screen and (max-width: 700px) {

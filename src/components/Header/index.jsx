@@ -1,5 +1,3 @@
-import avatarImg from '../../assets/avatar.png'
-
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -18,16 +16,11 @@ import {
 import './Header.css'
 
 const Header = () => {
-  const { user, logout } = useContext(AuthContext)
+  const { logout } = useContext(AuthContext)
 
   return (
     <div className="sidebar">
-      <div>
-        <img
-          src={user.avatarUrl === null ? avatarImg : user.avatarUrl}
-          alt="image user"
-        />
-      </div>
+      <div></div>
 
       <Link to="/dashboard">
         <FiFileText color="#fff" size={24} />
