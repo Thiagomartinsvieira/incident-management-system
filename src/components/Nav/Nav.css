@@ -1,5 +1,3 @@
-/* Nav.css */
-
 .nav {
     display: flex;
     align-items: center;
@@ -19,7 +17,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    position: relative; /* Adicione position: relative; */
+    position: relative; 
   }
 
   .user-menu li {
@@ -55,45 +53,41 @@
     margin-left: 6px;
   }
   
-  /* Estilo para o menu aparecer abaixo do nome de usuário */
   .user-menu {
     position: absolute;
-    top: 100%; /* Posicione abaixo do nome de usuário */
+    top: 100%; 
     right: 0;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: none;
   }
 
-  /* ... Your existing styles ... */
+  
 
 .user-menu-icons {
     display: flex;
     align-items: center;
-    margin-right: 10px; /* Add some spacing between the icons and the user's name */
+    margin-right: 10px; 
   }
   
   .user-menu-icons svg {
-    margin-right: 5px; /* Add spacing between the two icons */
+    margin-right: 5px; 
   }
   
-  /* ... Your existing styles ... */
-/* ... Your existing styles ... */
+
 
 .user-menu-icons {
   display: flex;
   align-items: center;
-  margin-right: 10px; /* Add some spacing between the icons and the user's name */
+  margin-right: 10px; 
 }
 
 .user-menu-icons svg {
-  margin-right: 5px; /* Add spacing between the two icons */
+  margin-right: 5px; 
 }
-
-/* ... Your existing styles ... */
   
   
-  .user-menu ul {
+.user-menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -109,7 +103,7 @@
     background-color: #f0f0f0;
   }
   
-  /* Exibindo o menu quando necessário */
+ 
   .user-info:hover .user-menu {
     display: block;
   }
