@@ -8,6 +8,10 @@
     flex: 1; 
     padding-right: 20px;
   }
+
+  .form-profile input:disabled{
+    cursor: not-allowed;
+  }
   
   .vertical-line {
     border-right: 1px solid #ccc; 
@@ -22,5 +26,7 @@
   .additional-info  h2, .additional-info h4 {
     margin-bottom: 1.5em;
   }
+
+ 
   
  

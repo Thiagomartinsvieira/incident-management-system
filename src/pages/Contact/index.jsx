@@ -16,7 +16,7 @@ const Contact = () => {
     try {
       await navigator.clipboard.writeText(emailText)
       toast.success('Email copiado!')
-    } catch(err) {
+    } catch (err) {
       console.log('Failed to copy email: ', err)
     }
   }
@@ -44,6 +44,7 @@ const Contact = () => {
                 type="text"
                 placeholder="Company Name"
                 value={user.nome}
+                disabled
                 readOnly
               />
               <label>Subject</label>
