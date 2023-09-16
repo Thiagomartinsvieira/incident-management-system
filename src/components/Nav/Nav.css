@@ -1,39 +1,116 @@
+/* Nav.css */
+
 .nav {
-    /* position: fixed; */
-    top: 0;
-    left: 0;
-    right: 0;
     display: flex;
-    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
+    padding: 10px;
     background-color: #00618A;
     color: #fff;
     z-index: 1000;
-}
-
-.nav h2 {
+  }
+  
+  .nav h2 {
     margin: 10px 10px;
     color: #fff;
-}
-
-.user-info {
+  }
+  
+  .user-info {
     display: flex;
     align-items: center;
-    margin: 0 10px;
-}
+    cursor: pointer;
+    position: relative; /* Adicione position: relative; */
+  }
 
-.user-info img{
+  .user-menu li {
+    background-color: #00618A;
+    color: #fff;
+    transition: all 3s;
+  }
+
+  .user-menu ul li:hover {
+    background-color: #005478;
+  }
+  
+  .user-info img {
     width: 30px;
     height: 30px;
-    display: block;
-    margin: auto 10px;
     border-radius: 50%;
-    align-items: center;
-    flex-direction: row;
+    margin-right: 10px;
     filter: drop-shadow(2px 3px 6px #12121271);
     -webkit-filter: drop-shadow(2px 3px 6px #12121271);
+  }
+  
+  .user-details {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-details h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .user-details svg {
+    margin-left: 6px;
+  }
+  
+  /* Estilo para o menu aparecer abaixo do nome de usuário */
+  .user-menu {
+    position: absolute;
+    top: 100%; /* Posicione abaixo do nome de usuário */
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none;
+  }
+
+  /* ... Your existing styles ... */
+
+.user-menu-icons {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Add some spacing between the icons and the user's name */
+  }
+  
+  .user-menu-icons svg {
+    margin-right: 5px; /* Add spacing between the two icons */
+  }
+  
+  /* ... Your existing styles ... */
+/* ... Your existing styles ... */
+
+.user-menu-icons {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Add some spacing between the icons and the user's name */
 }
 
-.user-info svg {
-    margin: 0 6px;
+.user-menu-icons svg {
+  margin-right: 5px; /* Add spacing between the two icons */
 }
+
+/* ... Your existing styles ... */
+  
+  
+  .user-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .user-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .user-menu li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Exibindo o menu quando necessário */
+  .user-info:hover .user-menu {
+    display: block;
+  }
+  
