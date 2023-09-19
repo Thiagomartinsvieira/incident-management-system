@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
+import Footer from '../../components/Footer'
 import Title from '../../components/Title'
 
 import { FiStar } from 'react-icons/fi'
@@ -76,6 +77,7 @@ const Customers = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

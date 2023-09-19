@@ -1,5 +1,6 @@
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
+import Footer from '../../components/Footer'
 import Title from '../../components/Title'
 import avatar from '../../assets/avatar.png'
 
@@ -147,6 +148,7 @@ const Profile = () => {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

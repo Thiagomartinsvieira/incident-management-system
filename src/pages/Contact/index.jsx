@@ -1,6 +1,7 @@
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
 import Title from '../../components/Title'
+import Footer from '../../components/Footer'
 import { useContext } from 'react'
 import { AuthContext } from '../../contexts/Auth'
 import { FiPhoneCall } from 'react-icons/fi'
@@ -81,6 +82,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

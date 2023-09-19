@@ -1,5 +1,6 @@
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
+import Footer from '../../components/Footer'
 import Title from '../../components/Title'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../contexts/Auth'
@@ -66,6 +67,7 @@ const About = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

@@ -2,6 +2,7 @@ import './Help.css'
 import Nav from '../../components/Nav'
 import Header from '../../components/Header'
 import Title from '../../components/Title'
+import Footer from '../../components/Footer'
 import { FiHelpCircle, FiSearch } from 'react-icons/fi'
 
 const Help = () => {
@@ -41,6 +42,7 @@ const Help = () => {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
