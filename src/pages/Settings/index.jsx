@@ -39,7 +39,9 @@ const Settings = () => {
     <div>
       <Nav />
       <Header />
-      <div className={`content ${darkMode ? 'dark-mode' : ''}`}>
+      <div
+        className={`content content-container ${darkMode ? 'dark-mode' : ''}`}
+      >
         <Title name="Settings">
           <FiSettings size={25} />
         </Title>

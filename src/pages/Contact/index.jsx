@@ -31,7 +31,7 @@ const Contact = () => {
       <Nav />
       <Header />
 
-      <div className="content">
+      <div className="content content-container">
         <Title name="Contact">
           <FiPhoneCall size={25} />
         </Title>

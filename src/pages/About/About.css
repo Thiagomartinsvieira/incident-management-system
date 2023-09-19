@@ -1,0 +1,39 @@
+.about {
+    text-align: center;
+}
+
+.about a{
+margin: 0 5px;   
+text-decoration: none;
+color: #333;
+transition: all ease-in-out 3s;
+}
+
+.about a:hover{
+    transform: scale(1.1);
+}
+
+.about h1 {
+    font-size: 24px;
+}
+
+.about h2 {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.about p {
+    font-size: 16px;
+}
+
+.about span {
+    font-weight: bold;
+}
+
+
+/* Dark Mode */
+
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+  }

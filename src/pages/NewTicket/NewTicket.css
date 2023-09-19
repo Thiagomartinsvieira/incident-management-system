@@ -1,3 +1,8 @@
+.content-container {
+    margin-top: 60px; 
+  }
+  
+
 form textarea {
     resize: none;
     height: 105px;

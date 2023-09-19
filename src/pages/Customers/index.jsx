@@ -44,7 +44,7 @@ const Customers = () => {
       <Nav />
       <Header />
 
-      <div className="content">
+      <div className="content content-container">
         <Title name="Customers">
           <FiStar size={25} />
         </Title>

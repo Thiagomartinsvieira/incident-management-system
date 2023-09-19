@@ -134,7 +134,7 @@ export default function Dashboard() {
       <Nav />
       <Header />
 
-      <div className="content">
+      <div className="content content-container">
         <Title name="Tickets">
           <FiMessageSquare size={25} />
         </Title>

@@ -169,7 +169,7 @@ const NewTicket = () => {
     <div>
       <Nav />
       <Header />
-      <div className="content">
+      <div className="content content-container">
         <Title name={id ? 'Edit ticket' : 'New Ticket'}>
           <FiPlusCircle size={25} />
         </Title>

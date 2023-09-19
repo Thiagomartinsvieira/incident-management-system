@@ -1,3 +1,7 @@
+.content-container {
+  margin-top: 60px; 
+}
+
 .newticket{
     float: right;
     margin-bottom: 1.5em;

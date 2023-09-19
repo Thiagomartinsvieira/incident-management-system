@@ -10,7 +10,7 @@ const Help = () => {
       <Nav />
       <Header />
 
-      <div className="content">
+      <div className="content content-container">
         <div className="help">
           <Title name="Help">
             <FiHelpCircle size={25} />
@@ -23,7 +23,7 @@ const Help = () => {
           </div>
         </div>
 
-        <div className="useful-info">
+        <div className="useful-info content-container">
           <h2>Plataforma de Sistema de Chamados</h2>
           <br />
           <p>

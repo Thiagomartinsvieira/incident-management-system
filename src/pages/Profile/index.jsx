@@ -97,7 +97,7 @@ const Profile = () => {
       <Nav />
       <Header />
 
-      <div className="content">
+      <div className="content content-container">
         <Title name="My Profile">
           <FiSettings size={25} />
         </Title>
