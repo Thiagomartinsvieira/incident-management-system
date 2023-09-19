@@ -1,5 +1,3 @@
-/* Footer.css */
-
 body {
   display: flex;
   flex-direction: column;
@@ -8,12 +6,15 @@ body {
 }
 
 #footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   background-color: #333;
   color: white;
   padding: 15px 0;
-  flex-shrink: 0; /* Prevent footer from shrinking */
-  margin-top: 29.2vh; /* Pushes the footer to the bottom */
 }
+
 
 .footer-content {
   display: flex;

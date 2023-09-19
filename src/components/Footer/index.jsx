@@ -4,7 +4,7 @@ import { FaLinkedin, FaGithub } from 'react-icons/fa'
 function Footer() {
   return (
     <footer id="footer">
-      <div className="content footer-content">
+      <div className="content footer-content ">
         <div className="footer-container">
           <h3>2023 - All rights are free - Developed by Thiago Martins</h3>
         </div>
