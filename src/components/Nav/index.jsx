@@ -20,7 +20,7 @@ const Nav = () => {
   }
 
   return (
-    <div className="nav">
+    <div className="nav nav-fixed">
       <Link to="/dashboard">
         <h2>Incident Management</h2>
       </Link>
