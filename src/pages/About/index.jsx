@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 import Title from '../../components/Title'
 import { useContext, useState } from 'react'
 import { AuthContext } from '../../contexts/Auth'
-import { FiGithub } from 'react-icons/fi'
+import { FiGithub, FiLink2, FiLinkedin } from 'react-icons/fi'
 import './About.css'
 import ProjectCard from '../../components/ProjectCard'
 
@@ -36,37 +36,57 @@ const About = () => {
               deixa motivado para que mais projetos futuros possam surgir
             </p>
             <br />
-            <h2>Para mais projetos como este</h2>
-            <br />
             <p>Me acompanhe em minhas pricipais redes 😉</p>
             <br />
+            <a
+              href="https://www.linkedin.com/in/thiago-martins-vieira-074550192/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FiLinkedin size={25} />
+            </a>{' '}
+            <a
+              href="https://github.com/Thiagomartinsvieira"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FiGithub size={25} />
+            </a>
+            <br />
+            <h2>Meus projetos recentes</h2>
+            <br />
             <ProjectCard
-              title="Project 1"
+              title="Portifolio"
               description="Description"
               githubLink="Link to gitHub"
               linkedinLink="Linkedin link"
+              imageSrc="src/assets/portifolio.png"
             />
             <ProjectCard
-              title="Project 2"
-              description="Description"
+              title="Auto Vieira"
+              description="Version 2 of the Auto Viação Vieira Website: Fictitious project developed with React and TypeScript. Intuitive interface, improved navigation, online ticket purchase, attractive promotions and emphasis on safety and comfort. Demonstration of skills in front-end development and creation of responsive interfaces."
               githubLink="Link to gitHub"
               linkedinLink="Linkedin link"
+              imageSrc="src/assets/auto-vieira.png"
             />
             <ProjectCard
-              title="Project 3"
-              description="Description"
+              title="Prime Flix"
+              description="Prime-Flix: My first project using an API. A React application that uses The Movie Database (TMDb) API to explore movies and series. Search detailed information, ratings, cast and genres. Personalized recommendations, playlists and viewing progress tracking. An intuitive and user-friendly navigation experience for movie and series enthusiasts."
               githubLink="Link to gitHub"
               linkedinLink="Linkedin link"
+              imageSrc="src/assets/prime-flix.png"
             />
             <ProjectCard
-              title="Project 4"
-              description="Description"
+              title="Password Generator"
+              description="Password generator developed with HTML5, CSS3 and JavaScript. The tool allows you to generate personalized passwords with a variable length of characters. The user can adjust the password length using a slider and then generate a new password by clicking the corresponding button. The generated password is displayed on the screen and can be copied with a single click. A practical and secure solution for creating strong passwords."
               githubLink="Link to gitHub"
               linkedinLink="Linkedin link"
+              imageSrc="src/assets/password-generator.png"
             />
           </div>
         </div>
       </div>
+      <br />
       <Footer />
     </div>
   )
