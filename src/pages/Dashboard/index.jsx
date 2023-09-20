@@ -19,6 +19,8 @@ import {
   limit,
   startAfter,
   query,
+  deleteDoc,
+  doc,
 } from 'firebase/firestore'
 import { db } from '../../services/firebaseConnection'
 
@@ -27,6 +29,7 @@ import Footer from '../../components/Footer'
 import Modal from '../../components/Modal'
 
 import './Dashboard.css'
+import { toast } from 'react-toastify'
 
 const listRef = collection(db, 'tickets')
 
@@ -76,12 +79,11 @@ export default function Dashboard() {
           createdFormat: format(doc.data().created.toDate(), 'dd/MM/yyyy'),
           status: doc.data().status,
           complement: doc.data().complement,
-          // Certifique-se de que a propriedade customerLocation exista nos dados do Firestore.
-          customerLocation: doc.data().customerLocation || '', // Pode ser uma string vazia se não existir
+          customerLocation: doc.data().customerLocation || '',
         })
       })
 
-      const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] // último documento
+      const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1]
 
       setTickets((tickets) => [...tickets, ...list])
       setLastDocs(lastDoc)
@@ -109,6 +111,21 @@ export default function Dashboard() {
   const toggleModal = (item) => {
     setShowPostModal(!showPostModal)
     setDetails({ ...item, customerLocation: item.customerLocation })
+  }
+
+  const handleDeleteTicket = async (ticketId) => {
+    try {
+      await deleteDoc(doc(db, 'tickets', ticketId))
+
+      setTickets((prevTickets) =>
+        prevTickets.filter((ticket) => ticket.id !== ticketId)
+      )
+
+      toast.success('Ticket excluído com sucesso!')
+    } catch (error) {
+      console.error('Erro ao excluir o ticket:', error)
+      toast.error('Erro ao excluir o ticket')
+    }
   }
 
   if (loading) {
@@ -143,7 +160,7 @@ export default function Dashboard() {
           {tickets.length === 0 ? (
             <div className="container dashboard">
               <span>Nenhum ticket encontrado...</span>
-              <Link to="/new" className="new">
+              <Link to="/newticket" className="new">
                 <FiPlus color="#FFF" size={25} />
                 Novo Ticket
               </Link>
@@ -204,13 +221,13 @@ export default function Dashboard() {
                           >
                             <FiEdit2 color="#FFF" size={17} />
                           </Link>
-                          <Link
-                            to={`/newticket/${item.id}`}
+                          <button
                             className="action"
                             style={{ backgroundColor: 'red' }}
+                            onClick={() => handleDeleteTicket(item.id)}
                           >
                             <FiTrash color="#FFF" size={17} />
-                          </Link>
+                          </button>
                         </td>
                       </tr>
                     )
