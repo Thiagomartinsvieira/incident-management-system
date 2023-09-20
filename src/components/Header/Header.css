@@ -3,6 +3,8 @@
     margin: 0;
     padding: 0;
     background-color: #00618A;
+    margin-bottom: 60px;
+    z-index: 1000;
     position: fixed;
     height: 100%;
     overflow: auto;
