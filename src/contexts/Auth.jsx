@@ -4,6 +4,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updatePassword,
+  deleteUser,
 } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 
@@ -12,7 +14,7 @@ import { toast } from 'react-toastify'
 
 export const AuthContext = createContext({})
 
-function AuthProvider({ children }) {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loadingAuth, setLoadingAuth] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -108,6 +110,28 @@ function AuthProvider({ children }) {
     setUser(null)
   }
 
+  const updatePassword = async (newPassword) => {
+    try {
+      await updatePassword(auth.currentUser, newPassword)
+    } catch (error) {
+      console.log(error)
+      toast.error('Failed to update password.')
+    }
+  }
+
+  const deleteUser = async () => {
+    try {
+      await deleteUser(auth.currentUser)
+      localStorage.removeItem('@ticketsPRO')
+      setUser(null)
+      toast.success('Your account has been deleted successfully.')
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+      toast.error('Failed to delete account.')
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -120,6 +144,8 @@ function AuthProvider({ children }) {
         loading,
         storageUser,
         setUser,
+        updatePassword,
+        deleteUser,
       }}
     >
       {children}
