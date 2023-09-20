@@ -6,8 +6,8 @@ import { useContext, useState } from 'react'
 import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
 import { toast } from 'react-toastify'
-import './Settings.css'
 import { useNavigate } from 'react-router-dom'
+import './Settings.css'
 
 const Settings = () => {
   const [darkMode, setDarkMode] = useState(false)
@@ -16,12 +16,7 @@ const Settings = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const navigate = useNavigate()
-  const { user } = useContext(AuthContext)
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    toast.success('Your message was sent successfully!')
-  }
+  const { user, deleteUser, updatePassword } = useContext(AuthContext)
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
@@ -47,7 +42,10 @@ const Settings = () => {
           <FiSettings size={25} />
         </Title>
         <div className="container container-settings">
-          <form className="form-profile form-settings" onSubmit={handleSubmit}>
+          <form
+            className="form-profile form-settings"
+            onSubmit={() => updatePassword()}
+          >
             <label>Your Name</label>
             <input type="text" value={user.nome} />
             <label>Enable dark mode</label>
