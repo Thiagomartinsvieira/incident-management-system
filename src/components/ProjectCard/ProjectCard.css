@@ -6,6 +6,7 @@
     background-color: #fff;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
+    text-align: center;
 }
 
 .project-card:hover {
@@ -19,6 +20,14 @@
 
 .project-card p {
     font-size: 16px;
+    margin-bottom: 1em;
+}
+
+.project-card img {
+    max-width: 75%;
+    height: auto;
+    border: 5px;
+    margin: 0 auto;
 }
 
 .project-links a {
