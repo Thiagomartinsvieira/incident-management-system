@@ -1,5 +1,6 @@
 .project-card {
     border: 1px solid #ddd;
+    display: grid;
     padding: 20px;
     margin: 20px;
     border-radius: 5px;
@@ -15,7 +16,7 @@
 
 .project-card h3 {
     font-size: 20px;
-    margin-bottom: 10px;
+    margin: 20px 0;
 }
 
 .project-card p {
@@ -24,7 +25,7 @@
 }
 
 .project-card img {
-    max-width: 75%;
+    max-width: 40%;
     height: auto;
     border: 5px;
     margin: 0 auto;
