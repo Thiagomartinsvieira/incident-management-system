@@ -1,5 +1,5 @@
 import './ProjectCard.css'
-import { FiGithub, FiLinkedin } from 'react-icons/fi'
+import { FiGithub } from 'react-icons/fi'
 
 const ProjectCard = ({
   title,
