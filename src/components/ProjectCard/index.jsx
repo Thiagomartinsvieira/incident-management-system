@@ -5,12 +5,14 @@ const ProjectCard = ({
   title,
   description,
   githubLink,
-  linkedinLink,
+  imageLink,
   imageSrc,
 }) => {
   return (
     <div className="project-card">
-      <img src={imageSrc} alt={title} />
+      <a href={imageLink} target="_blank" rel="noreferrer">
+        <img src={imageSrc} alt={title} />
+      </a>
       <h3>{title}</h3>
       <p>{description}</p>
       <div className="project-links">
