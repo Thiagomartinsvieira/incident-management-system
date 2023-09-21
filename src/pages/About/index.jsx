@@ -73,18 +73,16 @@ const About = () => {
               title="Prime Flix"
               description="Prime-Flix: My first project using an API. A React application that uses The Movie Database (TMDb) API to explore movies and series. Search detailed information, ratings, cast and genres. Personalized recommendations, playlists and viewing progress tracking. An intuitive and user-friendly navigation experience for movie and series enthusiasts."
               githubLink="https://github.com/Thiagomartinsvieira/projeto-filmes"
-              linkedinLink="Linkedin link"
+              imageLink="https://movies-prime-flix.netlify.app/"
               imageSrc="src/assets/prime-flix.png"
             />
-            <a href="">
-              <ProjectCard
-                title="Password Generator"
-                description="Password generator developed with HTML5, CSS3 and JavaScript. The tool allows you to generate personalized passwords with a variable length of characters. The user can adjust the password length using a slider and then generate a new password by clicking the corresponding button. The generated password is displayed on the screen and can be copied with a single click. A practical and secure solution for creating strong passwords."
-                githubLink="https://github.com/Thiagomartinsvieira/Gerador_de_senha"
-                linkedinLink="Linkedin link"
-                imageSrc="src/assets/password-generator.png"
-              />
-            </a>
+            <ProjectCard
+              title="Password Generator"
+              description="Password generator developed with HTML5, CSS3 and JavaScript. The tool allows you to generate personalized passwords with a variable length of characters. The user can adjust the password length using a slider and then generate a new password by clicking the corresponding button. The generated password is displayed on the screen and can be copied with a single click. A practical and secure solution for creating strong passwords."
+              githubLink="https://github.com/Thiagomartinsvieira/Gerador_de_senha"
+              imageLink="https://gerador-de-senha-theta-one.vercel.app/"
+              imageSrc="src/assets/password-generator.png"
+            />
           </div>
         </div>
       </div>
