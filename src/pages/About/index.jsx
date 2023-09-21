@@ -57,7 +57,7 @@ const About = () => {
             <br />
             <ProjectCard
               title="Portifolio"
-              description="Description"
+              description="Hello, I'm Thiago Martins, a front-end developer passionate about technology, looking for opportunities to apply my knowledge and improve skills. Although I don't have experience in this field, I've been working for two years as a Service Desk Analyst in the IT market. Despite the lack of academic training, I seek knowledge on my own, take courses, and develop personal projects. I maintain a daily study routine and I am determined to face challenges and grow professionally. I am focused, dedicated, and eager to contribute to challenging projects."
               githubLink="https://github.com/Thiagomartinsvieira/portfolio"
               imageLink="https://portfolio-plum-rho-75.vercel.app/"
               imageSrc="src/assets/portifolio.png"

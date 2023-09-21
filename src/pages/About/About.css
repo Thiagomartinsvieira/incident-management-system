@@ -9,8 +9,9 @@ color: #333;
 transition: all ease-in-out 3s;
 }
 
-.about a:hover{
+.about a svg:hover{
     transform: scale(1.1);
+    color: #000000;
 }
 
 .about h1 {
