@@ -113,6 +113,7 @@ const AuthProvider = ({ children }) => {
   const updatePassword = async (newPassword) => {
     try {
       await updatePassword(auth.currentUser, newPassword)
+      toast.success('Password updated successfully.')
     } catch (error) {
       console.log(error)
       toast.error('Failed to update password.')
