@@ -29,14 +29,14 @@ const About = () => {
           <div className="about">
             <h1>About me</h1>
             <p>
-              Olá <span>{firstName}</span> seja bem vindo a plataforma de
-              chamados feita para aplicar meus conhecimentos como front e backed
-              aqui nesta pagina voce pode ficar por dentro e acompanhar mais
-              projetos realizaos por mim, sua pínião é bastante importante e me
-              deixa motivado para que mais projetos futuros possam surgir
+              Hello <span>{firstName}</span>, welcome to the platform I've
+              created to apply my front-end and back-end knowledge. Here on this
+              page, you can stay up to date and follow more projects carried out
+              by me. Your opinion is very important and motivates me to create
+              more future projects.
             </p>
             <br />
-            <p>Me acompanhe em minhas pricipais redes 😉</p>
+            <p>Connect with me on my main social networks 😉</p>
             <br />
             <a
               href="https://www.linkedin.com/in/thiago-martins-vieira-074550192/"
@@ -53,10 +53,10 @@ const About = () => {
               <FiGithub size={25} />
             </a>
             <br />
-            <h2>Meus projetos recentes</h2>
+            <h2>My recent projects 🚀</h2>
             <br />
             <ProjectCard
-              title="Portifolio"
+              title="Portfolio"
               description="Hello, I'm Thiago Martins, a front-end developer passionate about technology, looking for opportunities to apply my knowledge and improve skills. Although I don't have experience in this field, I've been working for two years as a Service Desk Analyst in the IT market. Despite the lack of academic training, I seek knowledge on my own, take courses, and develop personal projects. I maintain a daily study routine and I am determined to face challenges and grow professionally. I am focused, dedicated, and eager to contribute to challenging projects."
               githubLink="https://github.com/Thiagomartinsvieira/portfolio"
               imageLink="https://portfolio-plum-rho-75.vercel.app/"
