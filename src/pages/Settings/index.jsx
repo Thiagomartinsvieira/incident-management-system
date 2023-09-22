@@ -13,7 +13,7 @@ const Settings = () => {
   const [darkMode, setDarkMode] = useState(false)
   const [deleteAccountConfirm, setDeleteAccountConfirm] = useState(false)
   const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmNewPassword, setConfirmNewPassword] = useState('')
 
   const navigate = useNavigate()
   const { user, deleteUser, updatePassword } = useContext(AuthContext)
@@ -44,7 +44,14 @@ const Settings = () => {
         <div className="container container-settings">
           <form
             className="form-profile form-settings"
-            onSubmit={() => updatePassword()}
+            onSubmit={(e) => {
+              e.preventDefault()
+              if (newPassword === confirmNewPassword) {
+                updatePassword(newPassword)
+              } else {
+                toast.error('Passwords do not match')
+              }
+            }}
           >
             <label>Your Name</label>
             <input type="text" value={user.nome} />
@@ -67,9 +74,10 @@ const Settings = () => {
             <input
               type="password"
               placeholder="Confirm New Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={confirmNewPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
             />
+
             <input type="submit" value="Submit" />
           </form>
           <div className="delete-account-container">
