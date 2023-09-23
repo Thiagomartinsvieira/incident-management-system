@@ -25,6 +25,10 @@ const SignUp = () => {
       return
     }
 
+    if (password.length <= 5) {
+      setError('your password needs 6 characters')
+    }
+
     if (password !== confirmPassword) {
       setError('Password and password confirmation do not match.')
       return
@@ -33,7 +37,7 @@ const SignUp = () => {
     try {
       await signUp(email, password, name)
     } catch (error) {
-      setError(error.message)
+      setError(`an error has occurred ${error.message}`)
     }
   }
 
