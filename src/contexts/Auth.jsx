@@ -110,17 +110,19 @@ const AuthProvider = ({ children }) => {
     setUser(null)
   }
 
-  const updatePassword = async (newPassword) => {
+  const updatePasswordFunction = async (newPassword) => {
     try {
       await updatePassword(auth.currentUser, newPassword)
       toast.success('Password updated successfully.')
+      return
     } catch (error) {
       console.log(error)
       toast.error('Failed to update password.')
+      return
     }
   }
 
-  const deleteUser = async () => {
+  const deleteUserAccount = async () => {
     try {
       await deleteUser(auth.currentUser)
       localStorage.removeItem('@ticketsPRO')
@@ -145,8 +147,8 @@ const AuthProvider = ({ children }) => {
         loading,
         storageUser,
         setUser,
-        updatePassword,
-        deleteUser,
+        updatePasswordFunction,
+        deleteUserAccount,
       }}
     >
       {children}

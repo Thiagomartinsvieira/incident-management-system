@@ -16,7 +16,8 @@ const Settings = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
 
   const navigate = useNavigate()
-  const { user, deleteUser, updatePassword } = useContext(AuthContext)
+  const { user, deleteUserAccount, updatePasswordFunction } =
+    useContext(AuthContext)
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
@@ -30,6 +31,11 @@ const Settings = () => {
       setDeleteAccountConfirm(true)
     }
   }
+
+  console.log('user:', user)
+  console.log('darkMode:', darkMode)
+  console.log('newPassword:', newPassword)
+  console.log('confirmNewPassword:', confirmNewPassword)
 
   return (
     <div>
@@ -47,14 +53,19 @@ const Settings = () => {
             onSubmit={(e) => {
               e.preventDefault()
               if (newPassword === confirmNewPassword) {
-                updatePassword(newPassword)
+                console.log('Submitting password update')
+                updatePasswordFunction(newPassword)
               } else {
                 toast.error('Passwords do not match')
               }
             }}
           >
             <label>Your Name</label>
-            <input type="text" value={user.nome} />
+            <input
+              type="text"
+              defaultValue={user.nome}
+              autoComplete="username"
+            />
             <label>Enable dark mode</label>
             <label className="toggle">
               <input
@@ -68,12 +79,14 @@ const Settings = () => {
             <input
               type="password"
               placeholder="New Password"
+              autoComplete="new-password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <input
               type="password"
               placeholder="Confirm New Password"
+              autoComplete="new-password" // Adicionado o atributo autoComplete
               value={confirmNewPassword}
               onChange={(e) => setConfirmNewPassword(e.target.value)}
             />
