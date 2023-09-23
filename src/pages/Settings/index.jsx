@@ -23,8 +23,25 @@ const Settings = () => {
     setDarkMode(!darkMode)
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (newPassword === confirmNewPassword) {
+      if (newPassword.trim() !== '') {
+        console.log('Submitting password update')
+        updatePasswordFunction(newPassword)
+      } else {
+        toast.error('Password cannot be empty.')
+      }
+    } else {
+      toast.error('Passwords do not match')
+    }
+  }
+
   const handleDeleteAccount = () => {
     if (deleteAccountConfirm) {
+      deleteUserAccount()
+
       navigate('/')
       toast.success('Your account has been deleted successfully.')
     } else {
@@ -48,22 +65,7 @@ const Settings = () => {
           <FiSettings size={25} />
         </Title>
         <div className="container container-settings">
-          <form
-            className="form-profile form-settings"
-            onSubmit={(e) => {
-              e.preventDefault()
-              if (newPassword === confirmNewPassword) {
-                if (newPassword.trim() !== '') {
-                  console.log('Submitting password update')
-                  updatePasswordFunction(newPassword)
-                } else {
-                  toast.error('Password cannot be empty.')
-                }
-              } else {
-                toast.error('Passwords do not match')
-              }
-            }}
-          >
+          <form className="form-profile form-settings" onSubmit={handleSubmit}>
             <label>Name</label>
             <input
               type="text"
