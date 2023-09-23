@@ -1,7 +1,7 @@
 import { FiX } from 'react-icons/fi'
 import './Modal.css'
 
-export default function Modal({ content, close }) {
+const Modal = ({ content, close }) => {
   return (
     <div className="modal">
       <div className="container">
@@ -62,3 +62,5 @@ export default function Modal({ content, close }) {
     </div>
   )
 }
+
+export default Modal
