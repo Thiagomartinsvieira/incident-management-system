@@ -33,7 +33,7 @@ import { toast } from 'react-toastify'
 
 const listRef = collection(db, 'tickets')
 
-export default function Dashboard() {
+const Dashboard = () => {
   const { logout } = useContext(AuthContext)
 
   const [tickets, setTickets] = useState([])
@@ -110,7 +110,7 @@ export default function Dashboard() {
 
   const toggleModal = (item) => {
     setShowPostModal(!showPostModal)
-    setDetails({ ...item, customerLocation: item.customerLocation })
+    setDetails({ ...item })
   }
 
   const handleDeleteTicket = async (ticketId) => {
@@ -255,3 +255,5 @@ export default function Dashboard() {
     </div>
   )
 }
+
+export default Dashboard
