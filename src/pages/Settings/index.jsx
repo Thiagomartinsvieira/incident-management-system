@@ -60,11 +60,19 @@ const Settings = () => {
               }
             }}
           >
-            <label>Your Name</label>
+            <label>Name</label>
             <input
               type="text"
               defaultValue={user.nome}
               autoComplete="username"
+              disabled
+            />
+            <label>Email</label>
+            <input
+              type="email"
+              defaultValue={user.email}
+              autoComplete="email"
+              disabled
             />
             <label>Enable dark mode</label>
             <label className="toggle">
