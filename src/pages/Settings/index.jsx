@@ -53,8 +53,12 @@ const Settings = () => {
             onSubmit={(e) => {
               e.preventDefault()
               if (newPassword === confirmNewPassword) {
-                console.log('Submitting password update')
-                updatePasswordFunction(newPassword)
+                if (newPassword.trim() !== '') {
+                  console.log('Submitting password update')
+                  updatePasswordFunction(newPassword)
+                } else {
+                  toast.error('Password cannot be empty.')
+                }
               } else {
                 toast.error('Passwords do not match')
               }
@@ -70,7 +74,7 @@ const Settings = () => {
             <label>Email</label>
             <input
               type="email"
-              defaultValue={user.email}
+              defaultValue={user.email + ' - ' + 'may soon be updated'}
               autoComplete="email"
               disabled
             />
@@ -94,7 +98,7 @@ const Settings = () => {
             <input
               type="password"
               placeholder="Confirm New Password"
-              autoComplete="new-password" // Adicionado o atributo autoComplete
+              autoComplete="new-password"
               value={confirmNewPassword}
               onChange={(e) => setConfirmNewPassword(e.target.value)}
             />
@@ -128,3 +132,17 @@ const Settings = () => {
 }
 
 export default Settings
+
+const handlePasswordUpdate = (e) => {
+  e.preventDefault()
+  if (newPassword === confirmNewPassword) {
+    if (newPassword.trim() !== '') {
+      console.log('Submitting password update')
+      updatePasswordFunction(newPassword)
+    } else {
+      toast.error('Password cannot be empty.')
+    }
+  } else {
+    toast.error('Passwords do not match')
+  }
+}
