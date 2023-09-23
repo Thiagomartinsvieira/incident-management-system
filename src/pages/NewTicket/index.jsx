@@ -126,7 +126,7 @@ const NewTicket = () => {
         complement: complement,
         status: status,
         userId: user.uid,
-        customerLocation: customerLocation, // Localização do cliente sendo enviada aqui
+        customerLocation: customerLocation, // Locacation send here
       })
         .then(() => {
           toast.info('ticket Updated!')
@@ -223,13 +223,14 @@ const NewTicket = () => {
 
             <label>Location</label>
             <select value={customerLocation} onChange={handleLocationSelect}>
-              <option value="sao paulo">São Paulo - SP (Brazil)</option>
-              <option value="rio de janeiro">
+              <option value="undefined">undefined</option>
+              <option value="Sao Paulo">São Paulo - SP (Brazil)</option>
+              <option value="Rio de janeiro">
                 Rio de Janeiro - RJ (Brazil)
               </option>
-              <option value="new york">New York - NY (USA)</option>
-              <option value="london">London (UK)</option>
-              <option value="tokyo">Tokyo (Japan)</option>
+              <option value="New York">New York - NY (USA)</option>
+              <option value="London">London (UK)</option>
+              <option value="Tokyo">Tokyo (Japan)</option>
             </select>
 
             <label>Status</label>
