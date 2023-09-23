@@ -132,17 +132,3 @@ const Settings = () => {
 }
 
 export default Settings
-
-const handlePasswordUpdate = (e) => {
-  e.preventDefault()
-  if (newPassword === confirmNewPassword) {
-    if (newPassword.trim() !== '') {
-      console.log('Submitting password update')
-      updatePasswordFunction(newPassword)
-    } else {
-      toast.error('Password cannot be empty.')
-    }
-  } else {
-    toast.error('Passwords do not match')
-  }
-}
