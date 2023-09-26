@@ -22,3 +22,37 @@
   background-color: #181A1B;
   color: #D8D4CF;
 }
+
+.dark-mode input {
+  background-color: #35393B;
+  color: #D8D4CF;
+}
+
+.dark-mode .delete-account-container .delete-account {
+  background-color: #181A1B;
+  color: #E8E6E3;
+}
+
+.dark-mode .delete-account-container .delete-account-confirm {
+  background-color: #181A1B;
+  color: #E8E6E3;
+}
+
+.dark-mode .delete-account-container .delete-account-confirm .btn-yes {
+  background-color: #830507;
+  color: #E8E6E3;
+}
+
+.dark-mode .delete-account-container .delete-account button  {
+  background-color: #830507;
+  color: #E8E6E3;
+}
+
+.dark-mode .contatc-container {
+  background-color: #1C1E1F;
+}
+
+.dark-mode textarea {
+  background-color: #3B3B3B;
+  color: #E8E6E3;
+}

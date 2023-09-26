@@ -7,8 +7,11 @@ import { AuthContext } from '../../contexts/Auth'
 import { FiPhoneCall } from 'react-icons/fi'
 import { toast } from 'react-toastify'
 import './Contact.css'
+import { useDarkMode } from '../../contexts/darkMode'
 
 const Contact = () => {
+  const { darkMode, toggleDarkMode } = useDarkMode()
+
   const { user } = useContext(AuthContext)
 
   const handleEmailClick = async (e) => {
@@ -32,7 +35,9 @@ const Contact = () => {
       <Nav />
       <Header />
 
-      <div className="content content-container">
+      <div
+        className={`content content-container ${darkMode ? 'dark-mode' : ''}`}
+      >
         <Title name="Contact">
           <FiPhoneCall size={25} />
         </Title>
