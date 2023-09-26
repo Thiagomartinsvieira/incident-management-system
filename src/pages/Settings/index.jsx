@@ -115,7 +115,9 @@ const Settings = () => {
             {deleteAccountConfirm && (
               <div className="delete-account-confirm">
                 <p>Are you sure you want to delete your account?</p>
-                <button onClick={handleDeleteAccount}>Yes</button>
+                <button onClick={handleDeleteAccount} className="btn-yes">
+                  Yes
+                </button>
                 <button onClick={() => setDeleteAccountConfirm(false)}>
                   No
                 </button>
