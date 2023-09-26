@@ -56,3 +56,20 @@
   background-color: #3B3B3B;
   color: #E8E6E3;
 }
+
+.dark-mode .project-card {
+  background-color: #181A1B;
+}
+
+.dark-mode svg {
+  color: #E8E6E3;
+}
+
+.dark-mode a svg {
+  color: #E8E6E3;
+}
+
+.dark-mode tr {
+  background-color: #1C1E1F;
+  color: #E8E6E3;
+} 
