@@ -3,6 +3,7 @@ import Nav from '../../components/Nav'
 import Title from '../../components/Title'
 import Footer from '../../components/Footer'
 import { useContext, useState } from 'react'
+import { useDarkMode } from '../../contexts/darkMode'
 import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
 import { toast } from 'react-toastify'
@@ -10,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import './Settings.css'
 
 const Settings = () => {
-  const [darkMode, setDarkMode] = useState(false)
+  const { darkMode, toggleDarkMode } = useDarkMode()
   const [deleteAccountConfirm, setDeleteAccountConfirm] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
@@ -18,10 +19,6 @@ const Settings = () => {
   const navigate = useNavigate()
   const { user, deleteUserAccount, updatePasswordFunction } =
     useContext(AuthContext)
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode)
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -50,7 +47,6 @@ const Settings = () => {
   }
 
   console.log('user:', user)
-  console.log('darkMode:', darkMode)
   console.log('newPassword:', newPassword)
   console.log('confirmNewPassword:', confirmNewPassword)
 
