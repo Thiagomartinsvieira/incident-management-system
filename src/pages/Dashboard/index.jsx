@@ -30,11 +30,12 @@ import Modal from '../../components/Modal'
 
 import './Dashboard.css'
 import { toast } from 'react-toastify'
+import { useDarkMode } from '../../contexts/darkMode'
 
 const listRef = collection(db, 'tickets')
 
 const Dashboard = () => {
-  const { logout } = useContext(AuthContext)
+  const { darkMode, toggleDarkMode } = useDarkMode()
 
   const [tickets, setTickets] = useState([])
   const [loading, setLoading] = useState(true)
@@ -151,7 +152,9 @@ const Dashboard = () => {
       <Nav />
       <Header />
 
-      <div className="content content-container">
+      <div
+        className={`content content-container ${darkMode ? 'dark-mode' : ''}`}
+      >
         <Title name="Tickets">
           <FiMessageSquare size={25} />
         </Title>

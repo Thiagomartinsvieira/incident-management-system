@@ -2,14 +2,15 @@ import Header from '../../components/Header'
 import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 import Title from '../../components/Title'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { AuthContext } from '../../contexts/Auth'
 import { FiGithub, FiLinkedin } from 'react-icons/fi'
 import './About.css'
 import ProjectCard from '../../components/ProjectCard'
+import { useDarkMode } from '../../contexts/darkMode'
 
 const About = () => {
-  const [darkMode, setDarkMode] = useState(false)
+  const { darkMode, toggleDarkMode } = useDarkMode()
 
   const { user } = useContext(AuthContext)
 
