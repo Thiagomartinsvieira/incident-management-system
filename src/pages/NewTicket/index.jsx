@@ -18,6 +18,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import './NewTicket.css'
 import { toast } from 'react-toastify'
+import { useDarkMode } from '../../contexts/darkMode'
 
 const listRef = collection(db, 'customers')
 
@@ -34,6 +35,8 @@ const NewTicket = () => {
   const [subject, setSubject] = useState('Support')
   const [status, setStatus] = useState('Open')
   const [idCustomer, setIdCustomer] = useState(false)
+
+  const { darkMode, toggleDarkMode } = useDarkMode()
 
   const navigate = useNavigate()
 
@@ -169,7 +172,9 @@ const NewTicket = () => {
     <div>
       <Nav />
       <Header />
-      <div className="content content-container">
+      <div
+        className={`content content-container ${darkMode ? 'dark-mode' : ''}`}
+      >
         <Title name={id ? 'Edit ticket' : 'New Ticket'}>
           <FiPlusCircle size={25} />
         </Title>

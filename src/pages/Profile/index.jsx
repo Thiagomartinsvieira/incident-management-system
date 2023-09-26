@@ -14,6 +14,7 @@ import { toast } from 'react-toastify'
 import { db, storage } from '../../services/firebaseConnection'
 import { doc, updateDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { useDarkMode } from '../../contexts/darkMode'
 
 const Profile = () => {
   const { user, setUser, storageUser, logout } = useContext(AuthContext)
@@ -23,6 +24,8 @@ const Profile = () => {
 
   const [name, setName] = useState(user && user.nome)
   const [email, setEmail] = useState(user && user.email)
+
+  const { darkMode, toggleDarkMode } = useDarkMode()
 
   const handleFile = (e) => {
     if (e.target.files[0]) {
@@ -98,7 +101,9 @@ const Profile = () => {
       <Nav />
       <Header />
 
-      <div className="content content-container">
+      <div
+        className={`content content-container ${darkMode ? 'dark-mode' : ''}`}
+      >
         <Title name="My Profile">
           <FiSettings size={25} />
         </Title>

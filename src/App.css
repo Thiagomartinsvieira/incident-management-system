@@ -73,3 +73,7 @@
   background-color: #1C1E1F;
   color: #E8E6E3;
 } 
+
+.dark-mode a {
+  color: #3391FF;
+}

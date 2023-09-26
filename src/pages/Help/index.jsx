@@ -4,14 +4,19 @@ import Header from '../../components/Header'
 import Title from '../../components/Title'
 import Footer from '../../components/Footer'
 import { FiHelpCircle, FiSearch } from 'react-icons/fi'
+import { useDarkMode } from '../../contexts/darkMode'
 
 const Help = () => {
+  const { darkMode, toggleDarkMode } = useDarkMode()
+
   return (
     <div>
       <Nav />
       <Header />
 
-      <div className="content content-container">
+      <div
+        className={`content content-container ${darkMode ? 'dark-mode' : ''}`}
+      >
         <div className="help">
           <Title name="Help">
             <FiHelpCircle size={25} />

@@ -10,11 +10,14 @@ import { db } from '../../services/firebaseConnection'
 import { addDoc, collection } from 'firebase/firestore'
 
 import { toast } from 'react-toastify'
+import { useDarkMode } from '../../contexts/darkMode'
 
 const Customers = () => {
   const [name, setName] = useState('')
   const [cnpj, setCnpj] = useState('')
   const [address, setAddress] = useState('')
+
+  const { darkMode, toggleDarkMode } = useDarkMode()
 
   const handleRegister = async (e) => {
     e.preventDefault()
@@ -45,7 +48,9 @@ const Customers = () => {
       <Nav />
       <Header />
 
-      <div className="content content-container">
+      <div
+        className={`content content-container ${darkMode ? 'dark-mode' : ''}`}
+      >
         <Title name="Customers">
           <FiStar size={25} />
         </Title>
