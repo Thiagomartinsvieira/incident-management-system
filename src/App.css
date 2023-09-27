@@ -70,10 +70,26 @@
 }
 
 .dark-mode tr {
-  background-color: #1C1E1F;
+  background-color: #35393B;
   color: #E8E6E3;
 } 
 
 .dark-mode a {
   color: #3391FF;
+}
+
+.dark-mode .newticket {
+  background-color: #699902;
+  color: #E8E6E3;
+}
+
+
+.dark-mode .btn-more {
+  background-color: #699902;
+  color: #E8E6E3;
+}
+
+.dark-mode button[type='submit'] {
+  background-color: #0062CC;
+  color: #E8E6E3;
 }
