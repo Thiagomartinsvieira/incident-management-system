@@ -3,7 +3,7 @@
     flex-direction: column; 
     gap: 20px;
   }
-
+  
 .toggle {
     position: relative;
     display: inline-block;

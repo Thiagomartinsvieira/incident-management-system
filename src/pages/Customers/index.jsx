@@ -49,7 +49,7 @@ const Customers = () => {
       <Header />
 
       <div
-        className={`content content-container ${darkMode ? 'dark-mode' : '\'}`}
+        className={`content content-container ${darkMode ? 'dark-mode' : ''}`}
       >
         <Title name="Customers">
           <FiStar size={25} />
