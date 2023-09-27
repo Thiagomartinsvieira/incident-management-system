@@ -93,3 +93,8 @@
   background-color: #0062CC;
   color: #E8E6E3;
 }
+
+.dark-mode .modal-custom {
+  background-color: #3B3B3B;
+  color: #E8E6E3;
+}
