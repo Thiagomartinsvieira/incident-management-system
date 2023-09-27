@@ -1,10 +1,13 @@
+import { useDarkMode } from '../../contexts/darkMode'
 import { FiX } from 'react-icons/fi'
 import './Modal.css'
 
 const Modal = ({ content, close }) => {
+  const { darkMode, setDarkMode } = useDarkMode()
+
   return (
-    <div className="modal">
-      <div className="container">
+    <div className={`modal ${darkMode ? 'dark-mode' : ''}`}>
+      <div className="container modal-custom">
         <button className="close" onClick={close}>
           <FiX size={25} color="#FFF" />
         </button>
