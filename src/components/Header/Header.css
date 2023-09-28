@@ -12,6 +12,7 @@
 
 .sidebar div {
     background: url('../src/assets/logo.jpeg');
+    margin-top: 8px;
     background-color: #00618A;
     background-position: center;
     background-repeat: no-repeat;
