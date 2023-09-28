@@ -76,7 +76,9 @@ const Settings = () => {
               autoComplete="email"
               disabled
             />
-            <label>Enable dark mode</label>
+            <label>{`${
+              darkMode ? 'Disable dark mode' : 'Enable dark mode'
+            }`}</label>
             <label className="toggle">
               <input
                 type="checkbox"
