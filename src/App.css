@@ -98,3 +98,17 @@
   background-color: #3B3B3B;
   color: #E8E6E3;
 }
+
+.dark-mode.sidebar {
+  background-color: #004E6E;
+  color: #E8E6E3;
+}
+
+.dark-mode.sidebar a {
+  color: #E8E6E3;
+}
+
+.dark-mode.nav{
+  background-color: #004E6E;
+  color: #E8E6E3;
+}
