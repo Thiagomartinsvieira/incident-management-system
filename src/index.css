@@ -127,9 +127,8 @@ button[type="submit"] {
   transition: background-color 0.3s; 
 }
 
-
 .container-center input[type="submit"]:hover {
-  background-color: #004566;
+  background-color: #004566; 
 }
 
 @media (min-width: 768px) {
