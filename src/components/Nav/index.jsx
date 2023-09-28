@@ -8,10 +8,13 @@ import {
   FiStar,
   FiUser,
 } from 'react-icons/fi'
+import { useDarkMode } from '../../contexts/darkMode'
 import { AuthContext } from '../../contexts/Auth'
 import { Link } from 'react-router-dom'
 
 const Nav = () => {
+  const { darkMode } = useDarkMode()
+
   const { user, logout } = useContext(AuthContext)
   const [menuVisible, setMenuVisible] = useState(false)
 
@@ -20,7 +23,7 @@ const Nav = () => {
   }
 
   return (
-    <div className="nav nav-fixed">
+    <div className={`nav nav-fixed ${darkMode ? 'dark-mode' : ''}`}>
       <Link to="/dashboard">
         <h2>Incident Management</h2>
       </Link>

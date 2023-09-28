@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { AuthContext } from '../../contexts/Auth'
+import { useDarkMode } from '../../contexts/darkMode'
 import {
   FiUser,
   FiSettings,
@@ -17,9 +18,10 @@ import './Header.css'
 
 const Header = () => {
   const { logout } = useContext(AuthContext)
+  const { darkMode } = useDarkMode()
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${darkMode ? 'dark-mode' : ''}`}>
       <div></div>
 
       <Link to="/dashboard">
