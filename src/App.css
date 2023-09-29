@@ -100,7 +100,7 @@
 }
 
 .dark-mode.sidebar {
-  background-color: #004E6E;
+  background-color: #004871;
   color: #E8E6E3;
 }
 
@@ -109,6 +109,16 @@
 }
 
 .dark-mode.nav{
-  background-color: #004E6E;
+  background-color: #004871;
+  color: #E8E6E3;
+}
+
+.dark-mode .logout-btn {
+  color: #E8E6E3;
+  border: 1px solid #E8E6E3;
+}
+
+.dark-mode select {
+  background-color: #6B6B6B;
   color: #E8E6E3;
 }
