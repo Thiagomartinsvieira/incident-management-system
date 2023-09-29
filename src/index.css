@@ -49,6 +49,10 @@ button[type="submit"] {
   color: #ccc;
 }
 
+.content-container {
+  min-height: 90vh;
+}
+
 
 .container-center {
   display: flex;
