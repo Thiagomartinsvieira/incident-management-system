@@ -32,9 +32,6 @@ transition: all ease-in-out 3s;
     font-weight: bold;
 }
 
-
-/* Dark Mode */
-
 .dark-mode {
     background-color: #333;
     color: #fff;
