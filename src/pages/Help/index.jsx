@@ -5,9 +5,25 @@ import Title from '../../components/Title'
 import Footer from '../../components/Footer'
 import { FiHelpCircle, FiSearch } from 'react-icons/fi'
 import { useDarkMode } from '../../contexts/darkMode'
+import KnowledgeBase from '../../components/KnowledgeBase'
 
 const Help = () => {
   const { darkMode, toggleDarkMode } = useDarkMode()
+
+  const knowledgeBaseLinks = [
+    {
+      title: 'How to Open a Ticket',
+      url: 'https://example.com/',
+    },
+    {
+      title: 'Solving Common Problems',
+      url: 'https://example.com/',
+    },
+    {
+      title: 'Contacting Support',
+      url: 'https://example.com/',
+    },
+  ]
 
   return (
     <div>
@@ -46,6 +62,8 @@ const Help = () => {
             456-7890.
           </p>
         </div>
+
+        <KnowledgeBase links={knowledgeBaseLinks} />
       </div>
       <Footer />
     </div>

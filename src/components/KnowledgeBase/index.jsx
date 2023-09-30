@@ -1,11 +1,13 @@
 const KnowledgeBase = ({ links }) => {
   return (
     <div className="knowledge-base content-container">
-      <h2>Knowledge base</h2>
+      <h2>Base de Conhecimento</h2>
       <ul>
         {links.map((link, index) => (
           <li key={index}>
-            <a href={link.url} target="_blank" rel="noreferrer"></a>
+            <a href={link.url} target="_blank" rel="noopener noreferrer">
+              {link.title}
+            </a>
           </li>
         ))}
       </ul>
