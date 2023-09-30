@@ -6,6 +6,7 @@ const KnowledgeBase = ({ links }) => {
         {links.map((link, index) => (
           <li key={index}>
             <a href={link.url} target="_blank" rel="noopener noreferrer">
+              <br />
               {link.title}
             </a>
           </li>
