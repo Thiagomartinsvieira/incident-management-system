@@ -22,7 +22,7 @@
 }
 
 .sidebar.dark-mode div {
-    background: url('../src/assets/dark-logo.png');
+    background: url('../src/assets/logo-dark-mode.png');
     background-color: #333;
     background-position: center;
     background-repeat: no-repeat;
