@@ -13,15 +13,27 @@ const Help = () => {
   const knowledgeBaseLinks = [
     {
       title: 'How to Open a Ticket',
-      url: 'https://example.com/',
+      url: 'https://example.com/how-to-open-ticket',
     },
     {
       title: 'Solving Common Problems',
-      url: 'https://example.com/',
+      url: 'https://example.com/solving-common-problems',
     },
     {
       title: 'Contacting Support',
-      url: 'https://example.com/',
+      url: 'https://example.com/contact-support',
+    },
+    {
+      title: 'FAQs',
+      url: 'https://example.com/faqs',
+    },
+    {
+      title: 'Getting Started Guide',
+      url: 'https://example.com/getting-started',
+    },
+    {
+      title: 'Troubleshooting Tips',
+      url: 'https://example.com/troubleshooting',
     },
   ]
 
@@ -45,7 +57,7 @@ const Help = () => {
           </div>
         </div>
 
-        <div className="useful-info content-container">
+        <div className="useful-info">
           <h2>Plataforma de Sistema de Chamados</h2>
           <br />
           <p>
