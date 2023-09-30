@@ -104,6 +104,11 @@
   color: #E8E6E3;
 }
 
+.dark-mode.sidebar a:hover {
+  background-color: #003b5e;
+  color: #E8E6E3;
+}
+
 .dark-mode.sidebar a {
   color: #E8E6E3;
 }
@@ -118,7 +123,15 @@
   border: 1px solid #E8E6E3;
 }
 
+.dark-mode .user-menu li {
+  background-color: #004871;
+}
+
 .dark-mode select {
   background-color: #6B6B6B;
   color: #E8E6E3;
+}
+
+.dark-mode body {
+  background-color: #1C1E1F;
 }
