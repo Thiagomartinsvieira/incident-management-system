@@ -18,7 +18,10 @@ const SignIn = () => {
 
   return (
     <div className="container-center">
-      <img src="src/assets/logo.jpeg" alt="help Desk" />
+      <img
+        src="https://www.milldesk.com.br/wp-content/uploads/2019/03/helpdesk.jpeg"
+        alt="help Desk"
+      />
       <form onSubmit={handleSignIn}>
         <h1>Welcome</h1>
         <h3>Login to follow and open your tickets</h3>
