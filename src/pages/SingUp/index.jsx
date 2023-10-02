@@ -45,7 +45,7 @@ const SignUp = () => {
 
   return (
     <div className="container-center">
-      <img src="src/assets/logo.jpeg" alt="help Desk" />
+      <img src="/assets/logo.jpeg" alt="help Desk" />
       <form onSubmit={handleSubmit}>
         <h1>New account</h1>
         <h3>Register to open and track your tickets</h3>
