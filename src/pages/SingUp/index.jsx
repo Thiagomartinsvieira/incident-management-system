@@ -13,6 +13,8 @@ const SignUp = () => {
   const { signUp, loadingAuth } = useContext(AuthContext)
 
   const handleSubmit = async (e) => {
+    console.log('SingUp component us mounted')
+
     e.preventDefault()
 
     if (
