@@ -11,12 +11,13 @@ import { useNavigate } from 'react-router-dom'
 import './Settings.css'
 
 const Settings = () => {
-  const { user, deleteUserAccount, updatePasswordFunction } =
+  const { user, setUser, deleteUserAccount, updatePasswordFunction } =
     useContext(AuthContext)
 
   const { darkMode, toggleDarkMode } = useDarkMode()
 
   const [userName, setUserName] = useState(user ? user.nome : '')
+  const [newName, setNewName] = useState(user ? user.nome : '')
   const [userEmail, setUserEmail] = useState(user ? user.email : '')
   const [deleteAccountConfirm, setDeleteAccountConfirm] = useState(false)
   const [newPassword, setNewPassword] = useState('')
