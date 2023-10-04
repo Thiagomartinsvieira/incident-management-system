@@ -2,7 +2,7 @@ import Header from '../../components/Header'
 import Nav from '../../components/Nav'
 import Title from '../../components/Title'
 import Footer from '../../components/Footer'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useDarkMode } from '../../contexts/darkMode'
 import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
@@ -11,14 +11,25 @@ import { useNavigate } from 'react-router-dom'
 import './Settings.css'
 
 const Settings = () => {
+  const { user, deleteUserAccount, updatePasswordFunction } =
+    useContext(AuthContext)
+
   const { darkMode, toggleDarkMode } = useDarkMode()
+
+  const [userName, setUserName] = useState(user ? user.nome : '')
+  const [userEmail, setUserEmail] = useState(user ? user.email : '')
   const [deleteAccountConfirm, setDeleteAccountConfirm] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
 
+  useEffect(() => {
+    if (user) {
+      setUserName(user.nome)
+      setUserEmail(user.email)
+    }
+  }, [user])
+
   const navigate = useNavigate()
-  const { user, deleteUserAccount, updatePasswordFunction } =
-    useContext(AuthContext)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -46,7 +57,7 @@ const Settings = () => {
     }
   }
 
-  console.log('user:', user)
+  console.log('user:', userName)
   console.log('newPassword:', newPassword)
   console.log('confirmNewPassword:', confirmNewPassword)
 
@@ -65,20 +76,17 @@ const Settings = () => {
             <label>Name</label>
             <input
               type="text"
-              defaultValue={user.nome}
-              autoComplete="username"
-              disabled
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
             />
             <label>Email</label>
             <input
               type="email"
-              defaultValue={user.email + ' - ' + 'may soon be updated'}
-              autoComplete="email"
-              disabled
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
             />
-            <label>{`${
-              darkMode ? 'Disable dark mode' : 'Enable dark mode'
-            }`}</label>
+            <label>{`${darkMode ? 'Disable dark mode' : 'Enable dark mode'
+              }`}</label>
             <label className="toggle">
               <input
                 type="checkbox"
