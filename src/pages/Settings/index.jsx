@@ -11,13 +11,17 @@ import { useNavigate } from 'react-router-dom'
 import './Settings.css'
 
 const Settings = () => {
-  const { user, setUser, deleteUserAccount, updatePasswordFunction } =
-    useContext(AuthContext)
+  const {
+    user,
+    deleteUserAccount,
+    updatePasswordFunction,
+    updateName,
+    updateEmailAddress,
+  } = useContext(AuthContext)
 
   const { darkMode, toggleDarkMode } = useDarkMode()
 
   const [userName, setUserName] = useState(user ? user.nome : '')
-  const [newName, setNewName] = useState(user ? user.nome : '')
   const [userEmail, setUserEmail] = useState(user ? user.email : '')
   const [deleteAccountConfirm, setDeleteAccountConfirm] = useState(false)
   const [newPassword, setNewPassword] = useState('')
@@ -32,8 +36,23 @@ const Settings = () => {
 
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+
+    console.log('Before updating name and email')
+
+    if (userName !== user.displayName) {
+      await updateName(userName)
+      setUserName(userName)
+    }
+
+    if (userEmail !== user.email) {
+      await updateEmailAddress(userEmail)
+      toast.success('Email Updated Successfully')
+      setUserEmail(userEmail)
+    }
+
+    console.log('After updating name and email')
 
     if (newPassword === confirmNewPassword) {
       if (newPassword.trim() !== '') {
@@ -133,6 +152,10 @@ const Settings = () => {
                   No
                 </button>
               </div>
+            )}
+            {console.log(
+              'Rendered delete account confirm:',
+              deleteAccountConfirm
             )}
           </div>
         </div>
