@@ -5,9 +5,11 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
+  updateProfile,
   deleteUser,
+  updateEmail,
 } from 'firebase/auth'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore'
 
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -68,7 +70,7 @@ const AuthProvider = ({ children }) => {
       })
   }
 
-  // Cadastrar um novo user
+  // Cadastrar um novo usuário
   const signUp = async (email, password, name) => {
     setLoadingAuth(true)
 
@@ -90,7 +92,7 @@ const AuthProvider = ({ children }) => {
           setUser(data)
           storageUser(data)
           setLoadingAuth(false)
-          toast.success('welcome to the incident system')
+          toast.success('Welcome to the incident system')
           navigate('/dashboard')
         })
       })
@@ -137,12 +139,16 @@ const AuthProvider = ({ children }) => {
 
   const updateName = async (newName) => {
     try {
-      await updateProfile(auth.currentUser, { displayName: newName })
-      setUser({ ...user, displayName: newName })
-      storageUser({ ...user, displayName: newName })
+      const docRef = doc(db, 'users', user.uid)
+      await updateDoc(docRef, { nome: newName })
+
+      setUser({ ...user, nome: newName })
+
+      storageUser({ ...user, nome: newName })
+
       toast.success('Name Updated Successfully')
     } catch (error) {
-      console.log(error)
+      console.log('Error Updating Name: ', error)
       toast.error('Failed to update name.')
     }
   }
