@@ -60,8 +60,9 @@ const Settings = () => {
 
           setIsPasswordChanged(false) // Redefina a flag de alteração de senha
 
-
-          
+          setNewPassword('')
+          setConfirmNewPassword('')
+          setCurrentPassword('')
 
         } else {
           toast.error('Password cannot be empty.')
@@ -132,8 +133,9 @@ const Settings = () => {
                 setIsUserInfoChanged(true)
               }}
             />
-            <label>{`${darkMode ? 'Disable dark mode' : 'Enable dark mode'
-              }`}</label>
+            <label>{`${
+              darkMode ? 'Disable dark mode' : 'Enable dark mode'
+            }`}</label>
             <label className="toggle">
               <input
                 type="checkbox"
