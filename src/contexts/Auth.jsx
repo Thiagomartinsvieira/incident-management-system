@@ -18,7 +18,6 @@ export const AuthContext = createContext({})
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-  const [email, setEmail] = useState(null)
   const [loadingAuth, setLoadingAuth] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -154,31 +153,26 @@ const AuthProvider = ({ children }) => {
     }
   }
 
-  const updateEmailAddress = async (newEmail, password) => {
+  const updateEmailAddress = async (newEmail, currentPassword) => {
     try {
-      console.log('Starting email update process...')
-      console.log('Password:', password) // Adicione esta linha
-
-      // Reautenticar o usuário com email e senha
+      // Reautenticar o usuário com email e senha atual
       const userCredential = await signInWithEmailAndPassword(
         auth,
-        user.email,
-        password
+        user.email, // Usando o email atual do usuário
+        currentPassword
       )
 
       // Verificar se a reautenticação foi bem-sucedida
       if (userCredential.user) {
         // Atualizar o email no Firebase Authentication
         await updateEmail(userCredential.user, newEmail)
-        console.log('Email successfully updated in Firebase Authentication.')
 
         // Atualizar o email no Firestore
         const docRef = doc(db, 'users', user.uid)
         await updateDoc(docRef, { email: newEmail })
-        console.log('Email successfully updated in Firestore.')
 
-        // Atualizar o estado 'email'
-        setEmail(newEmail)
+        // Atualizar o estado 'user' com o novo email
+        setUser({ ...user, email: newEmail })
 
         toast.success('Email Updated Successfully')
       } else {

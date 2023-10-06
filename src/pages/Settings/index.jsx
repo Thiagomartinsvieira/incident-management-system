@@ -1,13 +1,16 @@
-import Header from '../../components/Header'
-import Nav from '../../components/Nav'
-import Title from '../../components/Title'
-import Footer from '../../components/Footer'
-import { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useDarkMode } from '../../contexts/darkMode'
 import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { getAuth, EmailAuthProvider } from 'firebase/auth' // Importe os módulos do Firebase necessários
+
+import Header from '../../components/Header'
+import Nav from '../../components/Nav'
+import Title from '../../components/Title'
+import Footer from '../../components/Footer'
+
 import './Settings.css'
 
 const Settings = () => {
@@ -28,6 +31,11 @@ const Settings = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
   const [isUserInfoChanged, setIsUserInfoChanged] = useState(false)
   const [isPasswordChanged, setIsPasswordChanged] = useState(false)
+  const [currentPassword, setCurrentPassword] = useState('')
+
+  const navigate = useNavigate()
+
+  const auth = getAuth() // Obtenha a instância de autenticação do Firebase
 
   useEffect(() => {
     if (user) {
@@ -37,42 +45,49 @@ const Settings = () => {
     }
   }, [user])
 
-  const navigate = useNavigate()
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    let didUpdate = false
+    const didUpdate = false
 
-    if (isUserInfoChanged) {
-      if (userName !== user.displayName) {
-        await updateName(userName)
-        didUpdate = true
-      }
-
-      if (userEmail !== user.email) {
-        await updateEmailAddress(userEmail)
-        didUpdate = true
-      }
-    }
-
-    if (isPasswordChanged) {
+    try {
+      // A reautenticação não é mais necessária
+      // Atualize a senha diretamente
       if (newPassword === confirmNewPassword) {
         if (newPassword.trim() !== '') {
           console.log('Submitting password update')
           updatePasswordFunction(newPassword)
-          didUpdate = true
+
+          setIsPasswordChanged(false) // Redefina a flag de alteração de senha
+
+
+          
+
         } else {
           toast.error('Password cannot be empty.')
         }
       } else {
         toast.error('Passwords do not match')
       }
+    } catch (error) {
+      console.error('Error updating password:', error)
+      toast.error('Failed to update password')
     }
 
-    if (didUpdate) {
-      toast.success('Changes saved successfully.')
-    } else {
+    if (isUserInfoChanged) {
+      if (userName !== user.displayName) {
+        await updateName(userName)
+      }
+
+      if (userEmail !== user.email) {
+        await updateEmailAddress(userEmail)
+      }
+
+      toast.success('User information updated successfully.')
+      setIsUserInfoChanged(false) // Redefina a flag de alteração de informações do usuário
+    }
+
+    if (!isUserInfoChanged && !isPasswordChanged) {
       toast.info('No changes detected.')
     }
   }
@@ -130,6 +145,13 @@ const Settings = () => {
             <label>Change Password</label>
             <input
               type="password"
+              placeholder="Current Password"
+              autoComplete="current-password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+            <input
+              type="password"
               placeholder="New Password"
               autoComplete="new-password"
               value={newPassword}
@@ -148,7 +170,6 @@ const Settings = () => {
                 setIsPasswordChanged(true)
               }}
             />
-
             <input type="submit" value="Submit" />
           </form>
           <div className="delete-account-container">
