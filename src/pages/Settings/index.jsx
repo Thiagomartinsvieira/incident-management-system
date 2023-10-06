@@ -26,11 +26,14 @@ const Settings = () => {
   const [deleteAccountConfirm, setDeleteAccountConfirm] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
+  const [isUserInfoChanged, setIsUserInfoChanged] = useState(false)
+  const [isPasswordChanged, setIsPasswordChanged] = useState(false)
 
   useEffect(() => {
     if (user) {
       setUserName(user.nome)
       setUserEmail(user.email)
+      setIsUserInfoChanged(false)
     }
   }, [user])
 
@@ -39,47 +42,50 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log('Before updating name and email')
+    let didUpdate = false
 
-    if (userName !== user.displayName) {
-      await updateName(userName)
-      setUserName(userName)
-    }
-
-    if (userEmail !== user.email) {
-      await updateEmailAddress(userEmail)
-      toast.success('Email Updated Successfully')
-      setUserEmail(userEmail)
-    }
-
-    console.log('After updating name and email')
-
-    if (newPassword === confirmNewPassword) {
-      if (newPassword.trim() !== '') {
-        console.log('Submitting password update')
-        updatePasswordFunction(newPassword)
-      } else {
-        toast.error('Password cannot be empty.')
+    if (isUserInfoChanged) {
+      if (userName !== user.displayName) {
+        await updateName(userName)
+        didUpdate = true
       }
+
+      if (userEmail !== user.email) {
+        await updateEmailAddress(userEmail)
+        didUpdate = true
+      }
+    }
+
+    if (isPasswordChanged) {
+      if (newPassword === confirmNewPassword) {
+        if (newPassword.trim() !== '') {
+          console.log('Submitting password update')
+          updatePasswordFunction(newPassword)
+          didUpdate = true
+        } else {
+          toast.error('Password cannot be empty.')
+        }
+      } else {
+        toast.error('Passwords do not match')
+      }
+    }
+
+    if (didUpdate) {
+      toast.success('Changes saved successfully.')
     } else {
-      toast.error('Passwords do not match')
+      toast.info('No changes detected.')
     }
   }
 
   const handleDeleteAccount = () => {
     if (deleteAccountConfirm) {
       deleteUserAccount()
-
       navigate('/')
       toast.success('Your account has been deleted successfully.')
     } else {
       setDeleteAccountConfirm(true)
     }
   }
-
-  console.log('user:', userName)
-  console.log('newPassword:', newPassword)
-  console.log('confirmNewPassword:', confirmNewPassword)
 
   return (
     <div>
@@ -97,13 +103,19 @@ const Settings = () => {
             <input
               type="text"
               value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={(e) => {
+                setUserName(e.target.value)
+                setIsUserInfoChanged(true)
+              }}
             />
             <label>Email</label>
             <input
               type="email"
               value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
+              onChange={(e) => {
+                setUserEmail(e.target.value)
+                setIsUserInfoChanged(true)
+              }}
             />
             <label>{`${darkMode ? 'Disable dark mode' : 'Enable dark mode'
               }`}</label>
@@ -121,14 +133,20 @@ const Settings = () => {
               placeholder="New Password"
               autoComplete="new-password"
               value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              onChange={(e) => {
+                setNewPassword(e.target.value)
+                setIsPasswordChanged(true)
+              }}
             />
             <input
               type="password"
               placeholder="Confirm New Password"
               autoComplete="new-password"
               value={confirmNewPassword}
-              onChange={(e) => setConfirmNewPassword(e.target.value)}
+              onChange={(e) => {
+                setConfirmNewPassword(e.target.value)
+                setIsPasswordChanged(true)
+              }}
             />
 
             <input type="submit" value="Submit" />
@@ -152,10 +170,6 @@ const Settings = () => {
                   No
                 </button>
               </div>
-            )}
-            {console.log(
-              'Rendered delete account confirm:',
-              deleteAccountConfirm
             )}
           </div>
         </div>
