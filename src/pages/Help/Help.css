@@ -5,6 +5,11 @@
     width: 30em; 
 }
 
+.useful-info p {
+    text-align: left;
+    margin-right: 50%;
+}
+
 .container button[type="submit"] {
     text-align: center;
     display: flex;
