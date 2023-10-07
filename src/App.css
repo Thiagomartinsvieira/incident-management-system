@@ -123,6 +123,11 @@
   border: 1px solid #E8E6E3;
 }
 
+.dark-mode .dashboard {
+  background-color: #3B3B3B;
+  color: #E8E6E3;
+}
+
 .dark-mode .user-menu li {
   background-color: #004871;
 }
