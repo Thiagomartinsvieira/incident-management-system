@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
-  updateProfile,
+  EmailAuthProvider,
   deleteUser,
   updateEmail,
 } from 'firebase/auth'
@@ -153,26 +153,35 @@ const AuthProvider = ({ children }) => {
     }
   }
 
+  const reauthenticateWithCredential = async (email, currentPassword) => {
+    const currentUser = auth.currentUser
+
+    const credential = EmailAuthProvider.credential(email, currentPassword)
+
+    try {
+      await currentUser.reauthenticateWithCredential(credential)
+      return true
+    } catch (error) {
+      console.error('Error reauthenticating user:', error)
+      return false
+    }
+  }
+
   const updateEmailAddress = async (newEmail, currentPassword) => {
     try {
-      // Reautenticar o usuário com email e senha atual
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        user.email, // Usando o email atual do usuário
+      const isReauthenticated = await reauthenticateWithCredential(
+        user.email,
         currentPassword
       )
 
-      // Verificar se a reautenticação foi bem-sucedida
-      if (userCredential.user) {
-        // Atualizar o email no Firebase Authentication
-        await updateEmail(userCredential.user, newEmail)
+      if (isReauthenticated) {
+        const currentUser = auth.currentUser
 
-        // Atualizar o email no Firestore
-        const docRef = doc(db, 'users', user.uid)
-        await updateDoc(docRef, { email: newEmail })
+        await updateEmail(currentUser, newEmail)
 
-        // Atualizar o estado 'user' com o novo email
         setUser({ ...user, email: newEmail })
+
+        storageUser({ ...user, email: newEmail })
 
         toast.success('Email Updated Successfully')
       } else {
