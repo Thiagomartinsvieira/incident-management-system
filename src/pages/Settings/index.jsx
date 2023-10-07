@@ -52,58 +52,54 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    try {
-      if (newPassword === confirmNewPassword) {
-        if (newPassword.trim() !== '') {
-          console.log('Submitting password update')
-          const email = user.email
-          const credential = EmailAuthProvider.credential(
-            email,
-            currentPassword
-          )
-          const isReauthenticated = await reauthenticateWithCredential(
-            email,
-            credential
-          )
+    let isChangesDetected = false
 
-          if (isReauthenticated) {
-            await updatePasswordFunction(newPassword)
-            setIsPasswordChanged(false)
-
-            setNewPassword('')
-            setConfirmNewPassword('')
-            setCurrentPassword('')
-          } else {
-            toast.error(
-              'Failed to reauthenticate. Please check your current password.'
-            )
-          }
-        } else {
-          toast.error('Password cannot be empty.')
-        }
-      } else {
-        toast.error('Passwords do not match')
-      }
-    } catch (error) {
-      console.error('Error updating password:', error)
-      toast.error('Failed to update password')
-    }
-
+    // Verifique se houve alguma alteração nos campos de usuário
     if (isUserInfoChanged) {
       if (userName !== user.displayName) {
         await updateName(userName)
+        isChangesDetected = true
       }
 
       if (userEmail !== user.email) {
         await updateEmailAddress(userEmail)
+        isChangesDetected = true
       }
-
-      toast.success('User information updated successfully.')
-      setIsUserInfoChanged(false)
     }
 
-    if (!isUserInfoChanged && !isPasswordChanged) {
+    // Verifique se a senha foi alterada
+    if (newPassword !== '' || confirmNewPassword !== '') {
+      if (newPassword === confirmNewPassword && newPassword.trim() !== '') {
+        console.log('Submitting password update')
+        const email = user.email
+        const credential = EmailAuthProvider.credential(email, currentPassword)
+        const isReauthenticated = await reauthenticateWithCredential(
+          email,
+          credential
+        )
+
+        if (isReauthenticated) {
+          await updatePasswordFunction(newPassword)
+          setIsPasswordChanged(false)
+          setNewPassword('')
+          setConfirmNewPassword('')
+          setCurrentPassword('')
+          isChangesDetected = true
+        } else {
+          toast.error(
+            'Failed to reauthenticate. Please check your current password.'
+          )
+        }
+      } else {
+        toast.error('Passwords do not match or cannot be empty.')
+      }
+    }
+
+    if (!isChangesDetected && !isPasswordChanged) {
       toast.info('No changes detected.')
+    } else {
+      // Se houver alguma alteração, exiba a mensagem de sucesso
+      toast.success('Changes saved successfully.')
     }
   }
 
