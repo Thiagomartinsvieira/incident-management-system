@@ -240,38 +240,70 @@ const NewTicket = () => {
 
             <label>Status</label>
             <div className="status">
-              <input
-                type="radio"
-                name="radio"
-                value="Open"
-                onChange={handleOptionChange}
-                checked={status === 'Open'}
-              />
-              <span>Opened</span>
-              <input
-                type="radio"
-                name="radio"
-                value="Progress"
-                onChange={handleOptionChange}
-                checked={status === 'Progress'}
-              />
-              <span>in Progress</span>
-              <input
-                type="radio"
-                name="radio"
-                value="Hold"
-                onChange={handleOptionChange}
-                checked={status === 'Hold'}
-              />
-              <span>on Hold</span>
-              <input
-                type="radio"
-                name="radio"
-                value="Closed"
-                onChange={handleOptionChange}
-                checked={status === 'Closed'}
-              />
-              <span>Closed</span>
+              {id ? (
+                /* Se estiver na página de edição (Edit Ticket) */
+                <>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="Open"
+                    onChange={handleOptionChange}
+                    checked={status === 'Open'}
+                  />
+                  <span>Opened</span>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="Progress"
+                    onChange={handleOptionChange}
+                    checked={status === 'Progress'}
+                  />
+                  <span>in Progress</span>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="Hold"
+                    onChange={handleOptionChange}
+                    checked={status === 'Hold'}
+                  />
+                  <span>on Hold</span>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="Closed"
+                    onChange={handleOptionChange}
+                    checked={status === 'Closed'}
+                  />
+                  <span>Closed</span>
+                </>
+              ) : (
+                <>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="Open"
+                    onChange={handleOptionChange}
+                    checked={status === 'Open'}
+                  />
+                  <span>Opened</span>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="Progress"
+                    onChange={handleOptionChange}
+                    checked={status === 'Progress'}
+                  />
+                  <span>in Progress</span>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="Hold"
+                    onChange={handleOptionChange}
+                    checked={status === 'Hold'}
+                  />
+                  <span>on Hold</span>
+                </>
+              )}
             </div>
 
             <label>incident description</label>
