@@ -25,6 +25,7 @@
     right: 0;
     bottom: 0;
     background-color: #ccc;
+    border-radius: 10%;
 }
 
 .slider:before {
