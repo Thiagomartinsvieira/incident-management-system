@@ -134,12 +134,12 @@ const Dashboard = () => {
       <div>
         <Header />
 
-        <div className="content">
+        <div className={`content ${darkMode ? 'dark-mode' : ''}`}>
           <Title name="Tickets">
             <FiMessageSquare size={25} />
           </Title>
 
-          <div className="container dashboard">
+          <div className={`container dashboard ${darkMode ? 'dark-mode' : ''}`}>
             <span>Procurando por tickets...</span>
           </div>
         </div>
@@ -161,7 +161,9 @@ const Dashboard = () => {
 
         <>
           {tickets.length === 0 ? (
-            <div className="container dashboard">
+            <div
+              className={`container dashboard ${darkMode ? 'dark-mode' : ''}`}
+            >
               <span>Nenhum ticket encontrado...</span>
               <Link to="/newticket" className="new">
                 <FiPlus color="#FFF" size={25} />
@@ -172,7 +174,7 @@ const Dashboard = () => {
             <>
               <Link to="/newticket" className="newticket">
                 <FiPlus color="#FFF" size={25} />
-                Novo Ticket
+                New Ticket
               </Link>
 
               <table>
