@@ -4,7 +4,11 @@ import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import { getAuth, EmailAuthProvider } from 'firebase/auth' // Importe os módulos do Firebase necessários
+import {
+  getAuth,
+  EmailAuthProvider,
+  reauthenticateWithCredential, // Correção aqui
+} from 'firebase/auth' // Importe os módulos do Firebase necessários
 
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
@@ -48,22 +52,34 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const didUpdate = false
-
     try {
-      // A reautenticação não é mais necessária
-      // Atualize a senha diretamente
       if (newPassword === confirmNewPassword) {
         if (newPassword.trim() !== '') {
           console.log('Submitting password update')
-          updatePasswordFunction(newPassword)
+          const email = user.email // Obtém o email do usuário
+          const credential = EmailAuthProvider.credential(
+            email,
+            currentPassword
+          )
+          const isReauthenticated = await reauthenticateWithCredential(
+            email,
+            credential
+          )
 
-          setIsPasswordChanged(false) // Redefina a flag de alteração de senha
+          if (isReauthenticated) {
+            // Reautenticação bem-sucedida, agora você pode atualizar a senha
+            await updatePasswordFunction(newPassword)
+            setIsPasswordChanged(false) // Redefina a flag de alteração de senha
 
-          setNewPassword('')
-          setConfirmNewPassword('')
-          setCurrentPassword('')
-
+            // Limpe os campos de senha após a atualização bem-sucedida
+            setNewPassword('')
+            setConfirmNewPassword('')
+            setCurrentPassword('')
+          } else {
+            toast.error(
+              'Failed to reauthenticate. Please check your current password.'
+            )
+          }
         } else {
           toast.error('Password cannot be empty.')
         }
@@ -133,9 +149,8 @@ const Settings = () => {
                 setIsUserInfoChanged(true)
               }}
             />
-            <label>{`${
-              darkMode ? 'Disable dark mode' : 'Enable dark mode'
-            }`}</label>
+            <label>{`${darkMode ? 'Disable dark mode' : 'Enable dark mode'
+              }`}</label>
             <label className="toggle">
               <input
                 type="checkbox"
