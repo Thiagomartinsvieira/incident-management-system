@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useDarkMode } from '../../contexts/darkMode'
 import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom'
 import {
   getAuth,
   EmailAuthProvider,
-  reauthenticateWithCredential, // Correção aqui
-} from 'firebase/auth' // Importe os módulos do Firebase necessários
+  reauthenticateWithCredential,
+} from 'firebase/auth'
 
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
@@ -39,7 +39,7 @@ const Settings = () => {
 
   const navigate = useNavigate()
 
-  const auth = getAuth() // Obtenha a instância de autenticação do Firebase
+  const auth = getAuth()
 
   useEffect(() => {
     if (user) {
@@ -56,7 +56,7 @@ const Settings = () => {
       if (newPassword === confirmNewPassword) {
         if (newPassword.trim() !== '') {
           console.log('Submitting password update')
-          const email = user.email // Obtém o email do usuário
+          const email = user.email
           const credential = EmailAuthProvider.credential(
             email,
             currentPassword
@@ -67,11 +67,9 @@ const Settings = () => {
           )
 
           if (isReauthenticated) {
-            // Reautenticação bem-sucedida, agora você pode atualizar a senha
             await updatePasswordFunction(newPassword)
-            setIsPasswordChanged(false) // Redefina a flag de alteração de senha
+            setIsPasswordChanged(false)
 
-            // Limpe os campos de senha após a atualização bem-sucedida
             setNewPassword('')
             setConfirmNewPassword('')
             setCurrentPassword('')
@@ -101,7 +99,7 @@ const Settings = () => {
       }
 
       toast.success('User information updated successfully.')
-      setIsUserInfoChanged(false) // Redefina a flag de alteração de informações do usuário
+      setIsUserInfoChanged(false)
     }
 
     if (!isUserInfoChanged && !isPasswordChanged) {
