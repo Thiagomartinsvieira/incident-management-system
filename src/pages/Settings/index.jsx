@@ -54,7 +54,6 @@ const Settings = () => {
 
     let isChangesDetected = false
 
-    // Verifique se houve alguma alteração nos campos de usuário
     if (isUserInfoChanged) {
       if (userName !== user.displayName) {
         await updateName(userName)
@@ -67,8 +66,7 @@ const Settings = () => {
       }
     }
 
-    // Verifique se a senha foi alterada
-    if (newPassword !== '' || confirmNewPassword !== '') {
+    if (currentPassword || newPassword || confirmNewPassword) {
       if (newPassword === confirmNewPassword && newPassword.trim() !== '') {
         console.log('Submitting password update')
         const email = user.email
@@ -85,6 +83,7 @@ const Settings = () => {
           setConfirmNewPassword('')
           setCurrentPassword('')
           isChangesDetected = true
+          toast.success('Password changed successfully.')
         } else {
           toast.error(
             'Failed to reauthenticate. Please check your current password.'
@@ -97,9 +96,8 @@ const Settings = () => {
 
     if (!isChangesDetected && !isPasswordChanged) {
       toast.info('No changes detected.')
-    } else {
-      // Se houver alguma alteração, exiba a mensagem de sucesso
-      toast.success('Changes saved successfully.')
+    } else if (!isChangesDetected) {
+      toast.success('User information updated successfully.')
     }
   }
 
