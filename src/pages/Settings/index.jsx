@@ -36,6 +36,7 @@ const Settings = () => {
   const [isUserInfoChanged, setIsUserInfoChanged] = useState(false)
   const [isPasswordChanged, setIsPasswordChanged] = useState(false)
   const [currentPassword, setCurrentPassword] = useState('')
+  const [changeAlert, setChangeAlert] = useState(null)
 
   const navigate = useNavigate()
 
@@ -68,7 +69,6 @@ const Settings = () => {
 
     if (currentPassword || newPassword || confirmNewPassword) {
       if (newPassword === confirmNewPassword && newPassword.trim() !== '') {
-        console.log('Submitting password update')
         const email = user.email
         const credential = EmailAuthProvider.credential(email, currentPassword)
         const isReauthenticated = await reauthenticateWithCredential(
@@ -83,21 +83,29 @@ const Settings = () => {
           setConfirmNewPassword('')
           setCurrentPassword('')
           isChangesDetected = true
+          setChangeAlert('password')
           toast.success('Password changed successfully.')
         } else {
+          setChangeAlert('password-error')
           toast.error(
             'Failed to reauthenticate. Please check your current password.'
           )
         }
       } else {
+        setChangeAlert('password-error')
         toast.error('Passwords do not match or cannot be empty.')
       }
     }
 
-    if (!isChangesDetected && !isPasswordChanged) {
-      toast.info('No changes detected.')
-    } else if (!isChangesDetected) {
+    if (isChangesDetected) {
+      setChangeAlert('success')
       toast.success('User information updated successfully.')
+    } else if (isPasswordChanged) {
+      setChangeAlert('password-success')
+      toast.info('Password updated successfully.')
+    } else {
+      setChangeAlert('no-changes')
+      toast.info('No changes detected.')
     }
   }
 
