@@ -6,9 +6,12 @@ import Footer from '../../components/Footer'
 import { FiHelpCircle, FiSearch } from 'react-icons/fi'
 import { useDarkMode } from '../../contexts/darkMode'
 import KnowledgeBase from '../../components/KnowledgeBase'
+import { useState } from 'react'
 
 const Help = () => {
   const { darkMode, toggleDarkMode } = useDarkMode()
+
+  const [searchQuery, setSearchQuery] = useState('')
 
   const knowledgeBaseLinks = [
     {
