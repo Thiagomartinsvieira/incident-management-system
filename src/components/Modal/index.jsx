@@ -56,7 +56,7 @@ const Modal = ({ content, close }) => {
 
           {content.complement !== '' && (
             <>
-              <h3>Complement</h3>
+              <h3>Complement: </h3>
               <p>{content.complement}</p>
             </>
           )}

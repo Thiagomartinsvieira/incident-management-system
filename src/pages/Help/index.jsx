@@ -70,8 +70,8 @@ const Help = () => {
           <p>
             Se você tiver alguma dúvida ou precisar de assistência, não hesite
             em entrar em contato com nossa equipe de suporte pelo{' '}
-            <a href="/contact">formulário de contato</a> ou pelo telefone (123)
-            456-7890.
+            <a href="/contact">formulário de contato</a> ou pelo telefone (11)
+            962903104.
           </p>
         </div>
 
