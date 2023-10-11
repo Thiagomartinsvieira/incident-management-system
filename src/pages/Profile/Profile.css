@@ -62,7 +62,8 @@
     max-width: 600px;
   }
   
-  .logout-btn{
+  .container .logout-btn {
+    color: #121212;
     padding: 2px 5px;
     border: 1px solid #121212;
     background-color: transparent;

@@ -77,7 +77,6 @@ const Profile = () => {
     e.preventDefault()
 
     if (imageAvatar === null && name !== '') {
-      // change just name
       const docRef = doc(db, 'users', user.uid)
       await updateDoc(docRef, {
         nome: name,
@@ -91,7 +90,6 @@ const Profile = () => {
         toast.success('updated name!')
       })
     } else if (name !== '' && imageAvatar !== null) {
-      // update name and photo
       handleUpload()
     }
   }
