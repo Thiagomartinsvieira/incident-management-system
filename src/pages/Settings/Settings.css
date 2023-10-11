@@ -108,4 +108,24 @@ input:checked + .slider:before {
     opacity: 0.8; 
   }
   
+  .delete-account-container .delete-account-confirm button {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+
+  .delete-account-container .delete-account-confirm .btn-yes {
+    background-color: #ff4d4f;
+    color: #E8E6E3;
+    margin-bottom: 4px;
+  }
+  
+ .delete-account-container .delete-account button  {
+    background-color: #ff4d4f;
+    color: #E8E6E3;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  
   
