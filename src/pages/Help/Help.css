@@ -10,7 +10,7 @@
     margin-right: 50%;
 }
 
-.container button[type="submit"] {
+.container button {
     text-align: center;
     display: flex;
     align-items: center;
@@ -22,6 +22,10 @@
     border-radius: 5px;
     cursor: pointer; 
     margin-left: .3em;
+}
+
+.container button svg{
+    margin-left: 5px;
 }
 
 .container button[type="submit"] svg {
