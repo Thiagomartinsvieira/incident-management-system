@@ -12,6 +12,7 @@ const Help = () => {
   const { darkMode, toggleDarkMode } = useDarkMode()
 
   const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState([]) // Adicione o estado para os resultados da pesquisa
 
   const knowledgeBaseLinks = [
     {
@@ -40,6 +41,18 @@ const Help = () => {
     },
   ]
 
+  const handleSearch = () => {
+    const results = knowledgeBaseLinks.filter((link) => {
+      const query = searchQuery.toLowerCase()
+      return (
+        link.title.toLowerCase().includes(query) ||
+        link.url.toLowerCase().includes(query)
+      )
+    })
+
+    setSearchResults(results)
+  }
+
   return (
     <div>
       <Nav />
@@ -53,8 +66,13 @@ const Help = () => {
             <FiHelpCircle size={25} />
           </Title>
           <div className="container">
-            <input type="text" placeholder="Digite sua Dúvida" />
-            <button type="submit">
+            <input
+              type="text"
+              placeholder="Digite sua Dúvida"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button type="button" onClick={handleSearch}>
               Buscar <FiSearch />
             </button>
           </div>
@@ -79,6 +97,18 @@ const Help = () => {
         </div>
 
         <KnowledgeBase links={knowledgeBaseLinks} />
+
+        <div className="search-results">
+          {searchResults.length === 0 ? (
+            <p>Nenhum resultado encontrado</p>
+          ) : (
+            searchResults.map((result) => (
+              <a key={result.title} href={result.url}>
+                {result.title}
+              </a>
+            ))
+          )}
+        </div>
       </div>
       <Footer />
     </div>
