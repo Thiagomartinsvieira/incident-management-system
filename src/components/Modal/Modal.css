@@ -21,7 +21,7 @@
     border-radius: 15px;
 }
 
-.close {
+.modal .close {
     background-color: #AA2508;
     border: 0;
     border-radius: 5px;
