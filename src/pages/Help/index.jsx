@@ -12,7 +12,7 @@ const Help = () => {
   const { darkMode, toggleDarkMode } = useDarkMode()
 
   const [searchQuery, setSearchQuery] = useState('')
-  const [searchResults, setSearchResults] = useState([]) // Adicione o estado para os resultados da pesquisa
+  const [searchResults, setSearchResults] = useState([])
 
   const knowledgeBaseLinks = [
     {
@@ -68,31 +68,30 @@ const Help = () => {
           <div className="container">
             <input
               type="text"
-              placeholder="Digite sua Dúvida"
+              placeholder="Enter your Query"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button type="button" onClick={handleSearch}>
-              Buscar <FiSearch />
+              Search <FiSearch />
             </button>
           </div>
         </div>
 
         <div className="useful-info">
-          <h2>Plataforma de Sistema de Chamados</h2>
+          <h2>Ticketing System Platform</h2>
           <br />
           <p>
-            Bem-vindo à nossa plataforma de sistema de chamados. Aqui, você pode
-            criar, acompanhar e resolver problemas e consultas de forma
-            eficiente. Oferecemos uma ampla gama de recursos para ajudá-lo a
-            gerenciar suas solicitações de suporte de maneira simples e eficaz.
+            Welcome to our ticketing system platform. Here, you can create,
+            track, and resolve issues and queries efficiently. We offer a wide
+            range of features to help you manage your support requests in a
+            simple and effective way.
           </p>
           <br />
           <p>
-            Se você tiver alguma dúvida ou precisar de assistência, não hesite
-            em entrar em contato com nossa equipe de suporte pelo{' '}
-            <a href="/contact">formulário de contato</a> ou pelo telefone (11)
-            962903104.
+            If you have any questions or need assistance, please don't hesitate
+            to contact our support team through the{' '}
+            <a href="/contact">contact form</a> or by phone at (11) 96290-3104.
           </p>
         </div>
 
@@ -100,7 +99,7 @@ const Help = () => {
 
         <div className="search-results">
           {searchResults.length === 0 ? (
-            <p>Nenhum resultado encontrado</p>
+            <p>No results found</p>
           ) : (
             searchResults.map((result) => (
               <a key={result.title} href={result.url}>
