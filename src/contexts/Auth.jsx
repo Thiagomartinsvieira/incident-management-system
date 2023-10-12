@@ -70,7 +70,6 @@ const AuthProvider = ({ children }) => {
       })
   }
 
-  // Cadastrar um novo usuário
   const signUp = async (email, password, name) => {
     setLoadingAuth(true)
 
