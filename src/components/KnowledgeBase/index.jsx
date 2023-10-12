@@ -1,7 +1,7 @@
 const KnowledgeBase = ({ links }) => {
   return (
     <div className="knowledge-base content-container">
-      <h2>Base de Conhecimento</h2>
+      <h2>Knowledge base</h2>
       <ul>
         {links.map((link, index) => (
           <li key={index}>
