@@ -8,6 +8,7 @@ import {
   getAuth,
   EmailAuthProvider,
   reauthenticateWithCredential,
+  updatePassword,
 } from 'firebase/auth'
 
 import Header from '../../components/Header'
@@ -53,68 +54,101 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    let isChangesDetected = false
+    console.log('Submit button clicked')
 
-    if (isUserInfoChanged) {
-      if (userName !== user.displayName) {
-        await updateName(userName)
-        isChangesDetected = true
-      }
+    try {
+      let isChangesDetected = false
 
-      if (userEmail !== user.email) {
-        await updateEmailAddress(userEmail)
-        isChangesDetected = true
-      }
-    }
-
-    if (currentPassword || newPassword || confirmNewPassword) {
-      if (newPassword === confirmNewPassword && newPassword.trim() !== '') {
-        const email = user.email
-        const credential = EmailAuthProvider.credential(email, currentPassword)
-        const isReauthenticated = await reauthenticateWithCredential(
-          email,
-          credential
-        )
-
-        if (isReauthenticated) {
-          await updatePasswordFunction(newPassword)
-          setIsPasswordChanged(false)
-          setNewPassword('')
-          setConfirmNewPassword('')
-          setCurrentPassword('')
+      if (isUserInfoChanged) {
+        console.log('User information is changed')
+        if (userName !== user.displayName) {
+          await updateName(userName)
           isChangesDetected = true
-          setChangeAlert('password')
-          toast.success('Password changed successfully.')
+        }
+
+        if (userEmail !== user.email) {
+          await updateEmailAddress(userEmail, currentPassword)
+          isChangesDetected = true
+        }
+      }
+
+      if (currentPassword || newPassword || confirmNewPassword) {
+        console.log('Password fields are not empty')
+        if (newPassword === confirmNewPassword && newPassword.trim() !== '') {
+          const email = user.email
+          const credential = EmailAuthProvider.credential(
+            email,
+            currentPassword
+          )
+
+          console.log('Attempting to reauthenticate')
+
+          const isReauthenticated = await reauthenticateWithCredential(
+            email,
+            credential
+          )
+
+          if (isReauthenticated) {
+            console.log('Reauthenticated')
+            try {
+              console.log('Attempting to update password')
+              await updatePassword(auth.currentUser, newPassword)
+              console.log('Password updated successfully')
+              setIsPasswordChanged(false)
+              setNewPassword('')
+              setConfirmNewPassword('')
+              setCurrentPassword('')
+              isChangesDetected = true
+              setChangeAlert('password')
+              toast.success('Password changed successfully.')
+            } catch (error) {
+              console.error('Error updating password:', error)
+              setChangeAlert('password-error')
+              toast.error(
+                'Failed to update password. Please check the password criteria.'
+              )
+            }
+          } else {
+            setChangeAlert('password-error')
+            toast.error(
+              'Failed to reauthenticate. Please check your current password.'
+            )
+            console.log('Reauthentication failed')
+          }
         } else {
           setChangeAlert('password-error')
-          toast.error(
-            'Failed to reauthenticate. Please check your current password.'
-          )
+          toast.error('Passwords do not match or cannot be empty.')
+          console.log('Passwords do not match or cannot be empty')
         }
-      } else {
-        setChangeAlert('password-error')
-        toast.error('Passwords do not match or cannot be empty.')
       }
-    }
 
-    if (isChangesDetected) {
-      setChangeAlert('success')
-      toast.success('User information updated successfully.')
-    } else if (isPasswordChanged) {
-      setChangeAlert('password-success')
-      toast.info('Password updated successfully.')
-    } else {
-      setChangeAlert('no-changes')
-      toast.info('No changes detected.')
+      if (isChangesDetected) {
+        setChangeAlert('success')
+        toast.success('User information updated successfully.')
+        console.log('Changes detected')
+      } else if (isPasswordChanged) {
+        setChangeAlert('password-success')
+        toast.info('Password updated successfully.')
+        console.log('Password changed successfully')
+      } else {
+        setChangeAlert('no-changes')
+        toast.info('No changes detected.')
+        console.log('No changes detected')
+      }
+    } catch (error) {
+      console.error('An error occurred:', error)
+      toast.error('An error occurred. Please try again.')
     }
   }
 
   const handleDeleteAccount = () => {
     if (deleteAccountConfirm) {
+      console.log('Deleting account...')
       deleteUserAccount()
       navigate('/')
       toast.success('Your account has been deleted successfully.')
     } else {
+      console.log('Confirmation required')
       setDeleteAccountConfirm(true)
     }
   }

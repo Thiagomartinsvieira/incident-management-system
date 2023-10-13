@@ -41,33 +41,37 @@ const AuthProvider = ({ children }) => {
   const signIn = async (email, password) => {
     setLoadingAuth(true)
 
-    await signInWithEmailAndPassword(auth, email, password)
-      .then(async (value) => {
-        let uid = value.user.uid
+    try {
+      await signInWithEmailAndPassword(auth, email, password).then(
+        async (value) => {
+          let uid = value.user.uid
 
-        const docRef = doc(db, 'users', uid)
-        const docSnap = await getDoc(docRef)
+          const docRef = doc(db, 'users', uid)
+          const docSnap = await getDoc(docRef)
 
-        let data = {
-          uid: uid,
-          nome: docSnap.data().nome,
-          email: value.user.email,
-          avatarUrl: docSnap.data().avatarUrl,
+          let data = {
+            uid: uid,
+            nome: docSnap.data().nome,
+            email: value.user.email,
+            avatarUrl: docSnap.data().avatarUrl,
+          }
+
+          const firstName = data.nome.split(' ')[0]
+
+          setUser(data)
+          storageUser(data)
+          setLoadingAuth(false)
+          toast.success(`Welcome back ${firstName}`)
+          navigate('/dashboard')
         }
-
-        const firstName = data.nome.split(' ')[0]
-
-        setUser(data)
-        storageUser(data)
-        setLoadingAuth(false)
-        toast.success(`Welcome back ${firstName}`)
-        navigate('/dashboard')
-      })
-      .catch((error) => {
-        console.log(error)
-        setLoadingAuth(false)
-        toast.error('Something went wrong')
-      })
+      )
+    } catch (error) {
+      console.error('Error signing in:', error)
+      toast.error(
+        'An error occurred. Please check your credentials and try again.'
+      )
+      setLoadingAuth(false)
+    }
   }
 
   const signUp = async (email, password, name) => {
