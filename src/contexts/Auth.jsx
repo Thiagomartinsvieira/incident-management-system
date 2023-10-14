@@ -157,12 +157,14 @@ const AuthProvider = ({ children }) => {
   }
 
   const reauthenticateWithCredential = async (email, currentPassword) => {
+    console.log('Reauthentication initiated. Email:', email)
     const currentUser = auth.currentUser
-
     const credential = EmailAuthProvider.credential(email, currentPassword)
+    console.log('Reauthentication: Credential created:', credential)
 
     try {
       await currentUser.reauthenticateWithCredential(credential)
+      console.log('Reauthentication successful')
       return true
     } catch (error) {
       console.error('Error reauthenticating user:', error)
@@ -179,14 +181,15 @@ const AuthProvider = ({ children }) => {
 
       if (isReauthenticated) {
         const currentUser = auth.currentUser
-
-        await updateEmail(currentUser, newEmail)
-
-        setUser({ ...user, email: newEmail })
-
-        storageUser({ ...user, email: newEmail })
-
-        toast.success('Email Updated Successfully')
+        try {
+          await updateEmail(currentUser, newEmail)
+          setUser({ ...user, email: newEmail })
+          storageUser({ ...user, email: newEmail })
+          toast.success('Email Updated Successfully')
+        } catch (error) {
+          console.error('Error Updating Email: ', error)
+          toast.error('Failed to update email.')
+        }
       } else {
         console.error('User reauthentication failed.')
         toast.error('Failed to update email. Please try again later.')
