@@ -8,6 +8,7 @@ import {
   EmailAuthProvider,
   deleteUser,
   updateEmail,
+  reauthenticateWithCredential,
 } from 'firebase/auth'
 import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore'
 
@@ -44,15 +45,15 @@ const AuthProvider = ({ children }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password).then(
         async (value) => {
-          let uid = value.user.uid
+          const email = value.user.email // Store the user's email
 
-          const docRef = doc(db, 'users', uid)
+          const docRef = doc(db, 'users', value.user.uid)
           const docSnap = await getDoc(docRef)
 
-          let data = {
-            uid: uid,
+          const data = {
+            uid: value.user.uid,
             nome: docSnap.data().nome,
-            email: value.user.email,
+            email: email,
             avatarUrl: docSnap.data().avatarUrl,
           }
 
@@ -79,16 +80,16 @@ const AuthProvider = ({ children }) => {
 
     await createUserWithEmailAndPassword(auth, email, password)
       .then(async (value) => {
-        let uid = value.user.uid
+        const email = value.user.email // Store the user's email
 
-        await setDoc(doc(db, 'users', uid), {
+        await setDoc(doc(db, 'users', value.user.uid), {
           nome: name,
           avatarUrl: null,
         }).then(() => {
-          let data = {
-            uid: uid,
+          const data = {
+            uid: value.user.uid,
             nome: name,
-            email: value.user.email,
+            email: email,
             avatarUrl: null,
           }
 
@@ -118,11 +119,11 @@ const AuthProvider = ({ children }) => {
   const updatePasswordFunction = async (newPassword) => {
     try {
       await updatePassword(auth.currentUser, newPassword)
-      toast.success('Password updated successfully.')
+      toast.success('Password updated successfully')
       return
     } catch (error) {
       console.log(error)
-      toast.error('Failed to update password.')
+      toast.error('Failed to update password')
       return
     }
   }
@@ -132,11 +133,11 @@ const AuthProvider = ({ children }) => {
       await deleteUser(auth.currentUser)
       localStorage.removeItem('@ticketsPRO')
       setUser(null)
-      toast.success('Your account has been deleted successfully.')
+      toast.success('Your account has been deleted successfully')
       navigate('/')
     } catch (error) {
       console.log(error)
-      toast.error('Failed to delete account.')
+      toast.error('Failed to delete account')
     }
   }
 
@@ -152,51 +153,25 @@ const AuthProvider = ({ children }) => {
       toast.success('Name Updated Successfully')
     } catch (error) {
       console.log('Error Updating Name: ', error)
-      toast.error('Failed to update name.')
+      toast.error('Failed to update name')
     }
   }
 
-  const reauthenticateWithCredential = async (email, currentPassword) => {
-    console.log('Reauthentication initiated. Email:', email)
-    const currentUser = auth.currentUser
+  const reauthenticateWithCredential = async (currentPassword) => {
+    console.log('Reauthentication initiated')
+    const user = auth.currentUser
+    const email = user.email // Use the stored email
+    console.log('Reauthentication: Email:', email)
+
     const credential = EmailAuthProvider.credential(email, currentPassword)
-    console.log('Reauthentication: Credential created:', credential)
 
     try {
-      await currentUser.reauthenticateWithCredential(credential)
+      await reauthenticateWithCredential(user, credential)
       console.log('Reauthentication successful')
       return true
     } catch (error) {
       console.error('Error reauthenticating user:', error)
       return false
-    }
-  }
-
-  const updateEmailAddress = async (newEmail, currentPassword) => {
-    try {
-      const isReauthenticated = await reauthenticateWithCredential(
-        user.email,
-        currentPassword
-      )
-
-      if (isReauthenticated) {
-        const currentUser = auth.currentUser
-        try {
-          await updateEmail(currentUser, newEmail)
-          setUser({ ...user, email: newEmail })
-          storageUser({ ...user, email: newEmail })
-          toast.success('Email Updated Successfully')
-        } catch (error) {
-          console.error('Error Updating Email: ', error)
-          toast.error('Failed to update email.')
-        }
-      } else {
-        console.error('User reauthentication failed.')
-        toast.error('Failed to update email. Please try again later.')
-      }
-    } catch (error) {
-      console.error('Error Updating Email: ', error)
-      toast.error('Failed to update email.')
     }
   }
 
@@ -215,7 +190,7 @@ const AuthProvider = ({ children }) => {
         updatePasswordFunction,
         deleteUserAccount,
         updateName,
-        updateEmailAddress,
+        reauthenticateWithCredential, // Add this to the context
       }}
     >
       {children}
