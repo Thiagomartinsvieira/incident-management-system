@@ -10,6 +10,9 @@ import {
   reauthenticateWithCredential,
   updatePassword,
 } from 'firebase/auth'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+
+import { db } from '../../services/firebaseConnection'
 
 import Header from '../../components/Header'
 import Nav from '../../components/Nav'
@@ -19,18 +22,14 @@ import Footer from '../../components/Footer'
 import './Settings.css'
 
 const Settings = () => {
-  const {
-    user,
-    deleteUserAccount,
-    updatePasswordFunction,
-    updateName,
-    updateEmailAddress,
-  } = useContext(AuthContext)
+  const { user, deleteUserAccount, updatePasswordFunction, updateName } =
+    useContext(AuthContext)
 
   const { darkMode, toggleDarkMode } = useDarkMode()
 
   const [userName, setUserName] = useState(user ? user.nome : '')
   const [userEmail, setUserEmail] = useState(user ? user.email : '')
+  const [userPhotoUrl, setUserPhotoUrl] = useState(null)
   const [deleteAccountConfirm, setDeleteAccountConfirm] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
@@ -48,20 +47,38 @@ const Settings = () => {
       setUserName(user.nome)
       setUserEmail(user.email)
       setIsUserInfoChanged(false)
+
+      async function fetchUserPhoto() {
+        const docRef = doc(db, 'users', user.uid)
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+          const userData = docSnap.data()
+          setUserPhotoUrl(userData.avatarUrl)
+        }
+      }
+
+      fetchUserPhoto()
     }
   }, [user])
 
+  const handleDeleteAccount = () => {
+    if (deleteAccountConfirm) {
+      deleteUserAccount()
+      navigate('/')
+      toast.success('Your account has been deleted successfully.')
+    } else {
+      setDeleteAccountConfirm(true)
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    console.log('Submit button clicked')
 
     try {
       let isChangesDetected = false
 
       if (isUserInfoChanged) {
-        console.log('User information is changed')
-        if (userName !== user.displayName) {
+        if (userName !== user.nome) {
           await updateName(userName)
           isChangesDetected = true
         }
@@ -73,7 +90,6 @@ const Settings = () => {
       }
 
       if (currentPassword || newPassword || confirmNewPassword) {
-        console.log('Password fields are not empty')
         if (newPassword === confirmNewPassword && newPassword.trim() !== '') {
           const email = user.email
           const credential = EmailAuthProvider.credential(
@@ -81,19 +97,14 @@ const Settings = () => {
             currentPassword
           )
 
-          console.log('Attempting to reauthenticate')
-
           const isReauthenticated = await reauthenticateWithCredential(
             email,
             credential
           )
 
           if (isReauthenticated) {
-            console.log('Reauthenticated')
             try {
-              console.log('Attempting to update password')
               await updatePassword(auth.currentUser, newPassword)
-              console.log('Password updated successfully')
               setIsPasswordChanged(false)
               setNewPassword('')
               setConfirmNewPassword('')
@@ -102,7 +113,6 @@ const Settings = () => {
               setChangeAlert('password')
               toast.success('Password changed successfully.')
             } catch (error) {
-              console.error('Error updating password:', error)
               setChangeAlert('password-error')
               toast.error(
                 'Failed to update password. Please check the password criteria.'
@@ -113,43 +123,17 @@ const Settings = () => {
             toast.error(
               'Failed to reauthenticate. Please check your current password.'
             )
-            console.log('Reauthentication failed')
           }
-        } else {
-          setChangeAlert('password-error')
-          toast.error('Passwords do not match or cannot be empty.')
-          console.log('Passwords do not match or cannot be empty')
         }
       }
 
       if (isChangesDetected) {
-        setChangeAlert('success')
-        toast.success('User information updated successfully.')
-        console.log('Changes detected')
-      } else if (isPasswordChanged) {
-        setChangeAlert('password-success')
-        toast.info('Password updated successfully.')
-        console.log('Password changed successfully')
-      } else {
-        setChangeAlert('no-changes')
-        toast.info('No changes detected.')
-        console.log('No changes detected')
+        toast.success('Settings updated successfully.')
       }
     } catch (error) {
-      console.error('An error occurred:', error)
-      toast.error('An error occurred. Please try again.')
-    }
-  }
-
-  const handleDeleteAccount = () => {
-    if (deleteAccountConfirm) {
-      console.log('Deleting account...')
-      deleteUserAccount()
-      navigate('/')
-      toast.success('Your account has been deleted successfully.')
-    } else {
-      console.log('Confirmation required')
-      setDeleteAccountConfirm(true)
+      toast.error(
+        'An error occurred while updating settings. Please try again.'
+      )
     }
   }
 
@@ -164,6 +148,7 @@ const Settings = () => {
           <FiSettings size={25} />
         </Title>
         <div className="container container-settings">
+          {/* A foto do usuário não é renderizada aqui */}
           <form className="form-profile form-settings" onSubmit={handleSubmit}>
             <label>Name</label>
             <input

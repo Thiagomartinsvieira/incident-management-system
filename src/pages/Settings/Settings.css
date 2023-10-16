@@ -1,3 +1,5 @@
+/* Settings.css*/
+
 .container-settings{
     display: flex;
     flex-direction: column; 
@@ -127,5 +129,25 @@ input:checked + .slider:before {
     justify-content: center;
     margin: 0 auto;
   }
+
+  .password-input {
+    display: flex;
+    align-items: center;
+  }
   
+  .password-input input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
   
+  .password-input button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+
