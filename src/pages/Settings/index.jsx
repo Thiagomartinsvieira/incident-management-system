@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useDarkMode } from '../../contexts/darkMode'
 import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
@@ -10,8 +10,7 @@ import {
   reauthenticateWithCredential,
   updatePassword,
 } from 'firebase/auth'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
-
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../../services/firebaseConnection'
 
 import Header from '../../components/Header'
@@ -22,14 +21,19 @@ import Footer from '../../components/Footer'
 import './Settings.css'
 
 const Settings = () => {
-  const { user, deleteUserAccount, updatePasswordFunction, updateName } =
-    useContext(AuthContext)
+  const {
+    user,
+    deleteUserAccount,
+    updatePasswordFunction,
+    updateName,
+    reauthenticateWithCredential,
+  } = useContext(AuthContext)
 
   const { darkMode, toggleDarkMode } = useDarkMode()
 
   const [userName, setUserName] = useState(user ? user.nome : '')
   const [userEmail, setUserEmail] = useState(user ? user.email : '')
-  const [userPhotoUrl, setUserPhotoUrl] = useState(null)
+  const [userPhotoUrl, setUserPhotoUrl] = useState(null) // Defina setUserPhotoUrl aqui
   const [deleteAccountConfirm, setDeleteAccountConfirm] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
@@ -84,8 +88,25 @@ const Settings = () => {
         }
 
         if (userEmail !== user.email) {
-          await updateEmailAddress(userEmail, currentPassword)
-          isChangesDetected = true
+          const isReauthenticated =
+            await reauthenticateWithCredential(currentPassword)
+
+          if (isReauthenticated) {
+            try {
+              await updateEmail(auth.currentUser, userEmail)
+              isChangesDetected = true
+              setIsUserInfoChanged(false)
+              toast.success('Email updated successfully.')
+            } catch (error) {
+              setChangeAlert('email-error')
+              toast.error('Failed to update email. Please check your email.')
+            }
+          } else {
+            setChangeAlert('reauthentication-error')
+            toast.error(
+              'Failed to reauthenticate. Please check your current password.'
+            )
+          }
         }
       }
 
@@ -97,10 +118,8 @@ const Settings = () => {
             currentPassword
           )
 
-          const isReauthenticated = await reauthenticateWithCredential(
-            email,
-            credential
-          )
+          const isReauthenticated =
+            await reauthenticateWithCredential(credential)
 
           if (isReauthenticated) {
             try {
@@ -119,7 +138,7 @@ const Settings = () => {
               )
             }
           } else {
-            setChangeAlert('password-error')
+            setChangeAlert('reauthentication-error')
             toast.error(
               'Failed to reauthenticate. Please check your current password.'
             )
@@ -148,7 +167,6 @@ const Settings = () => {
           <FiSettings size={25} />
         </Title>
         <div className="container container-settings">
-          {/* A foto do usuário não é renderizada aqui */}
           <form className="form-profile form-settings" onSubmit={handleSubmit}>
             <label>Name</label>
             <input
@@ -206,6 +224,7 @@ const Settings = () => {
                 setIsPasswordChanged(true)
               }}
             />
+
             <input type="submit" value="Submit" />
           </form>
           <div className="delete-account-container">
