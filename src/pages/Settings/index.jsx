@@ -9,6 +9,7 @@ import {
   updatePassword,
   updateEmail,
   EmailAuthProvider,
+  reauthenticateWithCredential,
 } from 'firebase/auth' // Removed AuthError import
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../services/firebaseConnection'
@@ -88,12 +89,16 @@ const Settings = () => {
               user.email,
               currentPassword
             )
+            console.log('Credential:', credential) // Add this line
             await reauthenticateWithCredential(auth.currentUser, credential)
+            console.log('Reauthenticated successfully') // Add this line
             await updateEmail(auth.currentUser, userEmail)
+            console.log('Email updated successfully') // Add this line
             isChangesDetected = true
             setIsUserInfoChanged(false)
             toast.success('Email updated successfully.')
           } catch (error) {
+            console.log('Error updating email:', error) // Add this line
             setChangeAlert('email-error')
             toast.error('Failed to update email. Please check your email.')
           }
@@ -107,8 +112,11 @@ const Settings = () => {
               user.email,
               currentPassword
             )
+            console.log('Credential:', credential) // Add this line
             await reauthenticateWithCredential(auth.currentUser, credential)
+            console.log('Reauthenticated successfully') // Add this line
             await updatePassword(auth.currentUser, newPassword)
+            console.log('Password updated successfully') // Add this line
             setIsPasswordChanged(false)
             setNewPassword('')
             setConfirmNewPassword('')
@@ -117,6 +125,7 @@ const Settings = () => {
             setChangeAlert('password')
             toast.success('Password changed successfully.')
           } catch (error) {
+            console.log('Error updating password:', error) // Add this line
             setChangeAlert('password-error')
             toast.error(
               'Failed to update password. Please check the password criteria.'
@@ -129,7 +138,7 @@ const Settings = () => {
         toast.success('Settings updated successfully.')
       }
     } catch (error) {
-      console.log(error)
+      console.log('Error in handleSubmit:', error) // Add this line
 
       // Handle the error here, you can show a toast message or log it.
     }
