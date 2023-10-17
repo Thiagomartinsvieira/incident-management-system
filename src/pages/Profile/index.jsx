@@ -3,16 +3,13 @@ import Nav from '../../components/Nav'
 import Footer from '../../components/Footer'
 import Title from '../../components/Title'
 import avatar from '../../assets/avatar.png'
-
 import { FiSettings, FiUpload } from 'react-icons/fi'
 import { AuthContext } from '../../contexts/Auth'
-import { useContext, useState } from 'react'
-
+import { useContext, useState, useEffect } from 'react'
 import './Profile.css'
 import { toast } from 'react-toastify'
-
 import { db, storage } from '../../services/firebaseConnection'
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useDarkMode } from '../../contexts/darkMode'
 
@@ -27,6 +24,15 @@ const Profile = () => {
 
   const { darkMode, toggleDarkMode } = useDarkMode()
 
+  // Load user data including avatarUrl when the component mounts
+  useEffect(() => {
+    if (user) {
+      setName(user.nome)
+      setEmail(user.email)
+      setAvatarUrl(user.avatarUrl)
+    }
+  }, [user])
+
   const handleFile = (e) => {
     if (e.target.files[0]) {
       const image = e.target.files[0]
@@ -39,7 +45,7 @@ const Profile = () => {
         setImageAvatar(image)
         setAvatarUrl(URL.createObjectURL(image))
       } else {
-        toast.error('upload a png, jpeg or webp image')
+        toast.error('Upload a png, jpeg, or webp image')
         setImageAvatar(null)
         return
       }
@@ -67,7 +73,7 @@ const Profile = () => {
           }
           setUser(data)
           storageUser(data)
-          toast.success('updated with sucess!')
+          toast.success('Updated with success!')
         })
       })
     })
@@ -87,7 +93,7 @@ const Profile = () => {
         }
         setUser(data)
         storageUser(data)
-        toast.success('updated name!')
+        toast.success('Updated name!')
       })
     } else if (name !== '' && imageAvatar !== null) {
       handleUpload()
