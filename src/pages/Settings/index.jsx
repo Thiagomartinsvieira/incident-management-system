@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useDarkMode } from '../../contexts/darkMode'
 import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
@@ -6,11 +6,11 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import {
   getAuth,
-  EmailAuthProvider,
-  reauthenticateWithCredential,
   updatePassword,
-} from 'firebase/auth'
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+  updateEmail,
+  EmailAuthProvider,
+} from 'firebase/auth' // Removed AuthError import
+import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../services/firebaseConnection'
 
 import Header from '../../components/Header'
@@ -21,19 +21,14 @@ import Footer from '../../components/Footer'
 import './Settings.css'
 
 const Settings = () => {
-  const {
-    user,
-    deleteUserAccount,
-    updatePasswordFunction,
-    updateName,
-    reauthenticateWithCredential,
-  } = useContext(AuthContext)
+  const { user, deleteUserAccount, updatePasswordFunction, updateName } =
+    useContext(AuthContext)
 
   const { darkMode, toggleDarkMode } = useDarkMode()
 
   const [userName, setUserName] = useState(user ? user.nome : '')
   const [userEmail, setUserEmail] = useState(user ? user.email : '')
-  const [userPhotoUrl, setUserPhotoUrl] = useState(null) // Defina setUserPhotoUrl aqui
+  const [userPhotoUrl, setUserPhotoUrl] = useState(null)
   const [deleteAccountConfirm, setDeleteAccountConfirm] = useState(false)
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
@@ -88,59 +83,43 @@ const Settings = () => {
         }
 
         if (userEmail !== user.email) {
-          const isReauthenticated =
-            await reauthenticateWithCredential(currentPassword)
-
-          if (isReauthenticated) {
-            try {
-              await updateEmail(auth.currentUser, userEmail)
-              isChangesDetected = true
-              setIsUserInfoChanged(false)
-              toast.success('Email updated successfully.')
-            } catch (error) {
-              setChangeAlert('email-error')
-              toast.error('Failed to update email. Please check your email.')
-            }
-          } else {
-            setChangeAlert('reauthentication-error')
-            toast.error(
-              'Failed to reauthenticate. Please check your current password.'
+          try {
+            const credential = EmailAuthProvider.credential(
+              user.email,
+              currentPassword
             )
+            await reauthenticateWithCredential(auth.currentUser, credential)
+            await updateEmail(auth.currentUser, userEmail)
+            isChangesDetected = true
+            setIsUserInfoChanged(false)
+            toast.success('Email updated successfully.')
+          } catch (error) {
+            setChangeAlert('email-error')
+            toast.error('Failed to update email. Please check your email.')
           }
         }
       }
 
       if (currentPassword || newPassword || confirmNewPassword) {
         if (newPassword === confirmNewPassword && newPassword.trim() !== '') {
-          const email = user.email
-          const credential = EmailAuthProvider.credential(
-            email,
-            currentPassword
-          )
-
-          const isReauthenticated =
-            await reauthenticateWithCredential(credential)
-
-          if (isReauthenticated) {
-            try {
-              await updatePassword(auth.currentUser, newPassword)
-              setIsPasswordChanged(false)
-              setNewPassword('')
-              setConfirmNewPassword('')
-              setCurrentPassword('')
-              isChangesDetected = true
-              setChangeAlert('password')
-              toast.success('Password changed successfully.')
-            } catch (error) {
-              setChangeAlert('password-error')
-              toast.error(
-                'Failed to update password. Please check the password criteria.'
-              )
-            }
-          } else {
-            setChangeAlert('reauthentication-error')
+          try {
+            const credential = EmailAuthProvider.credential(
+              user.email,
+              currentPassword
+            )
+            await reauthenticateWithCredential(auth.currentUser, credential)
+            await updatePassword(auth.currentUser, newPassword)
+            setIsPasswordChanged(false)
+            setNewPassword('')
+            setConfirmNewPassword('')
+            setCurrentPassword('')
+            isChangesDetected = true
+            setChangeAlert('password')
+            toast.success('Password changed successfully.')
+          } catch (error) {
+            setChangeAlert('password-error')
             toast.error(
-              'Failed to reauthenticate. Please check your current password.'
+              'Failed to update password. Please check the password criteria.'
             )
           }
         }
@@ -150,9 +129,9 @@ const Settings = () => {
         toast.success('Settings updated successfully.')
       }
     } catch (error) {
-      toast.error(
-        'An error occurred while updating settings. Please try again.'
-      )
+      console.log(error)
+
+      // Handle the error here, you can show a toast message or log it.
     }
   }
 
@@ -242,13 +221,17 @@ const Settings = () => {
                 <button onClick={handleDeleteAccount} className="btn-yes">
                   Yes
                 </button>
-                <button onClick={() => setDeleteAccountConfirm(false)}>
+                <button
+                  onClick={() => setDeleteAccountConfirm(false)}
+                  className="btn-no"
+                >
                   No
                 </button>
               </div>
             )}
           </div>
         </div>
+        <div className={`toastify ${darkMode ? 'dark-mode' : ''}`} />
       </div>
       <Footer />
     </div>

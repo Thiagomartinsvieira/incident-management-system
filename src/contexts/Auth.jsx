@@ -11,7 +11,6 @@ import {
   reauthenticateWithCredential,
 } from 'firebase/auth'
 import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore'
-
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -45,7 +44,7 @@ const AuthProvider = ({ children }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password).then(
         async (value) => {
-          const email = value.user.email // Store the user's email
+          const email = value.user.email
 
           const docRef = doc(db, 'users', value.user.uid)
           const docSnap = await getDoc(docRef)
@@ -80,7 +79,7 @@ const AuthProvider = ({ children }) => {
 
     await createUserWithEmailAndPassword(auth, email, password)
       .then(async (value) => {
-        const email = value.user.email // Store the user's email
+        const email = value.user.email
 
         await setDoc(doc(db, 'users', value.user.uid), {
           nome: name,
@@ -157,24 +156,6 @@ const AuthProvider = ({ children }) => {
     }
   }
 
-  const reauthenticateWithCredential = async (currentPassword) => {
-    console.log('Reauthentication initiated')
-    const user = auth.currentUser
-    const email = user.email // Use the stored email
-    console.log('Reauthentication: Email:', email)
-
-    const credential = EmailAuthProvider.credential(email, currentPassword)
-
-    try {
-      await reauthenticateWithCredential(user, credential)
-      console.log('Reauthentication successful')
-      return true
-    } catch (error) {
-      console.error('Error reauthenticating user:', error)
-      return false
-    }
-  }
-
   return (
     <AuthContext.Provider
       value={{
@@ -190,7 +171,7 @@ const AuthProvider = ({ children }) => {
         updatePasswordFunction,
         deleteUserAccount,
         updateName,
-        reauthenticateWithCredential, // Add this to the context
+        reauthenticateWithCredential,
       }}
     >
       {children}
