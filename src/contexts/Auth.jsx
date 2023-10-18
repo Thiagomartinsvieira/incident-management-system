@@ -5,14 +5,13 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
-  EmailAuthProvider,
   deleteUser,
-  updateEmail,
   reauthenticateWithCredential,
 } from 'firebase/auth'
 import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore'
-import { useNavigate } from 'react-router-dom'
+import { onSnapshot } from 'firebase/firestore'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext({})
 
@@ -20,19 +19,26 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loadingAuth, setLoadingAuth] = useState(false)
   const [loading, setLoading] = useState(true)
-
   const navigate = useNavigate()
 
   useEffect(() => {
     async function loadUser() {
       const storageUser = localStorage.getItem('@ticketsPRO')
-
       if (storageUser) {
-        setUser(JSON.parse(storageUser))
+        const userData = JSON.parse(storageUser)
+        setUser(userData)
+        setLoading(false)
+
+        const userDocRef = doc(db, 'users', userData.uid)
+        const unsubscribe = onSnapshot(userDocRef, (doc) => {
+          const updatedUserData = doc.data()
+          setUser((prevUser) => ({ ...prevUser, ...updatedUserData }))
+        })
+
+        return () => unsubscribe()
+      } else {
         setLoading(false)
       }
-
-      setLoading(false)
     }
 
     loadUser()
@@ -42,29 +48,26 @@ const AuthProvider = ({ children }) => {
     setLoadingAuth(true)
 
     try {
-      await signInWithEmailAndPassword(auth, email, password).then(
-        async (value) => {
-          const email = value.user.email
+      const value = await signInWithEmailAndPassword(auth, email, password)
+      const userEmail = value.user.email
 
-          const docRef = doc(db, 'users', value.user.uid)
-          const docSnap = await getDoc(docRef)
+      const docRef = doc(db, 'users', value.user.uid)
+      const docSnap = await getDoc(docRef)
 
-          const data = {
-            uid: value.user.uid,
-            nome: docSnap.data().nome,
-            email: email,
-            avatarUrl: docSnap.data().avatarUrl,
-          }
+      const data = {
+        uid: value.user.uid,
+        nome: docSnap.data().nome,
+        email: userEmail, // Use the variable userEmail here
+        avatarUrl: docSnap.data().avatarUrl,
+      }
 
-          const firstName = data.nome.split(' ')[0]
+      const firstName = data.nome.split(' ')[0]
 
-          setUser(data)
-          storageUser(data)
-          setLoadingAuth(false)
-          toast.success(`Welcome back ${firstName}`)
-          navigate('/dashboard')
-        }
-      )
+      setUser(data)
+      storageUser(data)
+      setLoadingAuth(false)
+      toast.success(`Welcome back ${firstName}`)
+      navigate('/dashboard')
     } catch (error) {
       console.error('Error signing in:', error)
       toast.error(
@@ -77,32 +80,34 @@ const AuthProvider = ({ children }) => {
   const signUp = async (email, password, name) => {
     setLoadingAuth(true)
 
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then(async (value) => {
-        const email = value.user.email
+    try {
+      const value = await createUserWithEmailAndPassword(auth, email, password)
+      const userEmail = value.user.email
 
-        await setDoc(doc(db, 'users', value.user.uid), {
-          nome: name,
-          avatarUrl: null,
-        }).then(() => {
-          const data = {
-            uid: value.user.uid,
-            nome: name,
-            email: email,
-            avatarUrl: null,
-          }
+      await setDoc(doc(db, 'users', value.user.uid), {
+        nome: name,
+        avatarUrl: null,
+      })
 
-          setUser(data)
-          storageUser(data)
-          setLoadingAuth(false)
-          toast.success('Welcome to the incident system')
-          navigate('/dashboard')
-        })
-      })
-      .catch((error) => {
-        console.log(error)
-        setLoadingAuth(false)
-      })
+      const data = {
+        uid: value.user.uid,
+        nome: name,
+        email: userEmail, // Use the variable userEmail here
+        avatarUrl: null,
+      }
+
+      setUser(data)
+      storageUser(data)
+      setLoadingAuth(false)
+      toast.success('Welcome to the incident system')
+      navigate('/dashboard')
+    } catch (error) {
+      console.error(error)
+      toast.error(
+        'An error occurred. Please check your credentials and try again.'
+      )
+      setLoadingAuth(false)
+    }
   }
 
   const storageUser = (data) => {
@@ -151,7 +156,7 @@ const AuthProvider = ({ children }) => {
 
       toast.success('Name Updated Successfully')
     } catch (error) {
-      console.log('Error Updating Name: ', error)
+      console.error('Error Updating Name: ', error)
       toast.error('Failed to update name')
     }
   }
