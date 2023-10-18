@@ -97,6 +97,7 @@ const Settings = () => {
             isChangesDetected = true
             setIsUserInfoChanged(false)
             toast.success('Email updated successfully.')
+            setCurrentPassword('')
           } catch (error) {
             console.log('Error updating email:', error) // Add this line
             setChangeAlert('email-error')
@@ -187,7 +188,7 @@ const Settings = () => {
             <label>Current Password</label>
             <input
               type="password"
-              placeholder="Current Password"
+              placeholder="please enter the password to make changes"
               autoComplete="current-password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
