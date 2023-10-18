@@ -184,7 +184,7 @@ const Settings = () => {
               />
               <span className="slider"></span>
             </label>
-            <label>Change Password</label>
+            <label>Current Password</label>
             <input
               type="password"
               placeholder="Current Password"
@@ -192,6 +192,8 @@ const Settings = () => {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
             />
+            <label>Change Password</label>
+           
             <input
               type="password"
               placeholder="New Password"
