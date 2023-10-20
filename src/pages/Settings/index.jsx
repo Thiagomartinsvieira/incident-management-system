@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useDarkMode } from '../../contexts/darkMode'
 import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
@@ -22,8 +22,14 @@ import Footer from '../../components/Footer'
 import './Settings.css'
 
 const Settings = () => {
-  const { user, deleteUserAccount, updatePasswordFunction, updateName } =
-    useContext(AuthContext)
+  const {
+    user,
+    setUser, // Add setUser from AuthContext
+    deleteUserAccount,
+    updatePasswordFunction,
+    updateName,
+    storageUser, // Add storageUser from AuthContext
+  } = useContext(AuthContext)
 
   const { darkMode, toggleDarkMode } = useDarkMode()
 
@@ -90,16 +96,27 @@ const Settings = () => {
               currentPassword
             )
 
+            // Reauthenticate the user with their current password
             await reauthenticateWithCredential(auth.currentUser, credential)
+
+            // Update the email address
             await updateEmail(auth.currentUser, userEmail)
+
+            // Update the email in the local state
+            const updatedUser = { ...user, email: userEmail }
+            setUser(updatedUser) // Update user in the context
+            storageUser(updatedUser) // Store the updated user data
+
             isChangesDetected = true
             setIsUserInfoChanged(false)
-            toast.success('Email updated successfully.')
             setCurrentPassword('')
+            toast.success('Email updated successfully.')
           } catch (error) {
             console.log('Error updating email:', error)
             setChangeAlert('email-error')
-            toast.error('Failed to update email. Please check your email.')
+            toast.error(
+              'Failed to update email. Please check your current password.'
+            )
           }
         }
       }
