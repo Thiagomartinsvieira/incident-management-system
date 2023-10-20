@@ -57,14 +57,15 @@ const AuthProvider = ({ children }) => {
       const data = {
         uid: value.user.uid,
         nome: docSnap.data().nome,
-        email: userEmail, // Use the variable userEmail here
+        email: userEmail,
         avatarUrl: docSnap.data().avatarUrl,
       }
 
-      const firstName = data.nome.split(' ')[0]
-
       setUser(data)
       storageUser(data)
+
+      const firstName = data.nome.split(' ')[0]
+
       setLoadingAuth(false)
       toast.success(`Welcome back ${firstName}`)
       navigate('/dashboard')
