@@ -95,18 +95,11 @@ const Settings = () => {
               user.email,
               currentPassword
             )
-
-            // Reauthenticate the user with their current password
             await reauthenticateWithCredential(auth.currentUser, credential)
-
-            // Update the email address
             await updateEmail(auth.currentUser, userEmail)
-
-            // Update the email in the local state
             const updatedUser = { ...user, email: userEmail }
-            setUser(updatedUser) // Update user in the context
-            storageUser(updatedUser) // Store the updated user data
-
+            setUser(updatedUser)
+            storageUser(updatedUser)
             isChangesDetected = true
             setIsUserInfoChanged(false)
             setCurrentPassword('')
@@ -128,7 +121,6 @@ const Settings = () => {
               user.email,
               currentPassword
             )
-
             await reauthenticateWithCredential(auth.currentUser, credential)
             await updatePassword(auth.currentUser, newPassword)
             setIsPasswordChanged(false)
