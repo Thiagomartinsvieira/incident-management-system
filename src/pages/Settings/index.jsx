@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useDarkMode } from '../../contexts/darkMode'
 import { AuthContext } from '../../contexts/Auth'
 import { FiSettings } from 'react-icons/fi'
@@ -24,11 +24,11 @@ import './Settings.css'
 const Settings = () => {
   const {
     user,
-    setUser, // Add setUser from AuthContext
+    setUser,
     deleteUserAccount,
     updatePasswordFunction,
     updateName,
-    storageUser, // Add storageUser from AuthContext
+    storageUser,
   } = useContext(AuthContext)
 
   const { darkMode, toggleDarkMode } = useDarkMode()
@@ -145,7 +145,6 @@ const Settings = () => {
       }
     } catch (error) {
       console.log('Error in handleSubmit:', error)
-      // Handle the error here, you can show a toast message or log it.
     }
   }
 
