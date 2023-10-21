@@ -29,6 +29,7 @@ const Settings = () => {
     updatePasswordFunction,
     updateName,
     storageUser,
+    reauthenticateWithCredential,
   } = useContext(AuthContext)
 
   const { darkMode, toggleDarkMode } = useDarkMode()
@@ -81,70 +82,69 @@ const Settings = () => {
     e.preventDefault()
 
     try {
-      let isChangesDetected = false
-
-      if (isUserInfoChanged) {
-        if (userName !== user.nome) {
-          await updateName(userName)
-          isChangesDetected = true
-        }
-
-        if (userEmail !== user.email) {
-          try {
-            const credential = EmailAuthProvider.credential(
-              user.email,
-              currentPassword
-            )
-            await reauthenticateWithCredential(auth.currentUser, credential)
-            await updateEmail(auth.currentUser, userEmail)
-            const updatedUser = { ...user, email: userEmail }
-            setUser(updatedUser)
-            storageUser(updatedUser)
-            isChangesDetected = true
+      if (isUserInfoChanged || isPasswordChanged) {
+        if (isUserInfoChanged) {
+          if (userName !== user.nome) {
+            await updateName(userName)
             setIsUserInfoChanged(false)
-            setCurrentPassword('')
-            toast.success('Email updated successfully.')
-          } catch (error) {
-            console.log('Error updating email:', error)
-            setChangeAlert('email-error')
-            toast.error(
-              'Failed to update email. Please check your current password.'
-            )
+          }
+
+          if (userEmail !== user.email) {
+            try {
+              const credential = EmailAuthProvider.credential(
+                user.email,
+                currentPassword
+              )
+              await reauthenticateWithCredential(auth.currentUser, credential)
+
+              await updateEmail(auth.currentUser, userEmail)
+
+              const updatedUser = { ...user, email: userEmail }
+              setUser(updatedUser)
+              storageUser(updatedUser)
+              setCurrentPassword('')
+              toast.success('Email updated successfully.')
+            } catch (error) {
+              console.error('Error updating email:', error)
+              setChangeAlert('email-error')
+              toast.error(
+                'Failed to update email. Please check your current password.'
+              )
+            }
           }
         }
-      }
 
-      if (currentPassword || newPassword || confirmNewPassword) {
-        if (newPassword === confirmNewPassword && newPassword.trim() !== '') {
-          try {
-            const credential = EmailAuthProvider.credential(
-              user.email,
-              currentPassword
-            )
-            await reauthenticateWithCredential(auth.currentUser, credential)
-            await updatePassword(auth.currentUser, newPassword)
-            setIsPasswordChanged(false)
-            setNewPassword('')
-            setConfirmNewPassword('')
-            setCurrentPassword('')
-            isChangesDetected = true
-            setChangeAlert('password')
-            toast.success('Password changed successfully.')
-          } catch (error) {
-            console.log('Error updating password:', error)
-            setChangeAlert('password-error')
-            toast.error(
-              'Failed to update password. Please check the password criteria.'
-            )
+        if (isPasswordChanged) {
+          if (newPassword === confirmNewPassword && newPassword.trim() !== '') {
+            try {
+              const credential = EmailAuthProvider.credential(
+                user.email,
+                currentPassword
+              )
+              await reauthenticateWithCredential(auth.currentUser, credential)
+
+              await updatePassword(auth.currentUser, newPassword)
+
+              setIsPasswordChanged(false)
+              setNewPassword('')
+              setConfirmNewPassword('')
+              setCurrentPassword('')
+              setChangeAlert('password')
+              toast.success('Password changed successfully.')
+            } catch (error) {
+              console.error('Error updating password:', error)
+              setChangeAlert('password-error')
+              toast.error(
+                'Failed to update password. Please check the password criteria.'
+              )
+            }
           }
         }
-      }
 
-      if (isChangesDetected) {
         toast.success('Settings updated successfully.')
       }
     } catch (error) {
-      console.log('Error in handleSubmit:', error)
+      console.error('Error in handleSubmit:', error)
     }
   }
 
