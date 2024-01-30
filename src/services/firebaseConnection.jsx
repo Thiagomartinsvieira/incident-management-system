@@ -1,10 +1,14 @@
+// firabaseConnection
+
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 
+console.log('FIREBASE_API_KEY:', import.meta.env.FIREBASE_API_KEY)
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyBye0y--oY7O9xRWtAI141a2KKLLVf68vY',
+  apiKey: import.meta.env.FIREBASE_API_KEY,
   authDomain: 'tickets-project-1f300.firebaseapp.com',
   projectId: 'tickets-project-1f300',
   storageBucket: 'tickets-project-1f300.appspot.com',
