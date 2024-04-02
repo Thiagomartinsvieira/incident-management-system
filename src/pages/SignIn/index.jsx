@@ -6,7 +6,8 @@ const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { signIn, loadingAuth } = useContext(AuthContext)
+  const { signIn, loadingAuth, signInWithGoogle, user } =
+    useContext(AuthContext)
 
   const handleSignIn = async (e) => {
     e.preventDefault()
@@ -18,7 +19,7 @@ const SignIn = () => {
 
   return (
     <div className="container-center">
-      <img src="src/assets/logo.jpeg" alt="help Desk" />
+      <img className="img-logo" src="src/assets/logo.jpeg" alt="help Desk" />
       <form onSubmit={handleSignIn}>
         <h1>Welcome</h1>
         <h3>Login to follow and open your tickets</h3>
@@ -35,9 +36,20 @@ const SignIn = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <span>
-          don't have an account? <Link to="/register">Click here</Link>
+          do not have an account? <Link to="/register">Click here</Link>
         </span>
         <input type="submit" value={loadingAuth ? 'Loading...' : 'Acess'} />
+
+        <div className="google-sign-in">
+          <button type="button" onClick={signInWithGoogle}>
+            <img
+              src="https://logopng.com.br/logos/google-37.png"
+              alt="Google sign-in"
+              className="logo-google"
+            />
+            <p>Sign in with Google</p>
+          </button>
+        </div>
       </form>
     </div>
   )
