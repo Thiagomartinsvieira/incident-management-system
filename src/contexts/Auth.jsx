@@ -7,6 +7,8 @@ import {
   updatePassword,
   deleteUser,
   reauthenticateWithCredential,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from 'firebase/auth'
 import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore'
 import { onSnapshot } from 'firebase/firestore'
@@ -93,7 +95,7 @@ const AuthProvider = ({ children }) => {
       const data = {
         uid: value.user.uid,
         nome: name,
-        email: userEmail, // Use the variable userEmail here
+        email: userEmail,
         avatarUrl: null,
       }
 
@@ -162,6 +164,41 @@ const AuthProvider = ({ children }) => {
     }
   }
 
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider()
+
+    try {
+      const result = await signInWithPopup(auth, provider)
+
+      const user = result.user
+
+      console.log(user)
+
+      const userData = {
+        uid: user.uid,
+        nome: user.displayName,
+        email: user.email,
+        avatarUrl: user.photoURL,
+      }
+
+      setUser(userData)
+      storageUser(userData)
+      navigate('/dashboard')
+    } catch (error) {
+      console.log(error)
+      toast.error("Couldn't sign in with Google.")
+    }
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        setUser(result.user)
+      })
+      .catch((error) => {
+        console.log(error)
+        toast.error("Couldn't sign in with Google.")
+      })
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -178,6 +215,7 @@ const AuthProvider = ({ children }) => {
         deleteUserAccount,
         updateName,
         reauthenticateWithCredential,
+        signInWithGoogle,
       }}
     >
       {children}
