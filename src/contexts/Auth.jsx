@@ -181,22 +181,16 @@ const AuthProvider = ({ children }) => {
         avatarUrl: user.photoURL,
       }
 
+      const firstName = userData.nome.split(' ')[0]
+
       setUser(userData)
       storageUser(userData)
       navigate('/dashboard')
+      toast.success(`Welcome back ${firstName}`)
     } catch (error) {
       console.log(error)
       toast.error("Couldn't sign in with Google.")
     }
-
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        setUser(result.user)
-      })
-      .catch((error) => {
-        console.log(error)
-        toast.error("Couldn't sign in with Google.")
-      })
   }
 
   return (
