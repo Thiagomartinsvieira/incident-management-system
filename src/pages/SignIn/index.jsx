@@ -43,7 +43,7 @@ const SignIn = () => {
         <div className="google-sign-in">
           <button type="button" onClick={signInWithGoogle}>
             <img
-              src="https://logopng.com.br/logos/google-37.png"
+              src="/src/assets/google-logo.png"
               alt="Google sign-in"
               className="logo-google"
             />
