@@ -6,8 +6,7 @@ const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { signIn, loadingAuth, signInWithGoogle, user } =
-    useContext(AuthContext)
+  const { signIn, loadingAuth, signInWithGoogle } = useContext(AuthContext)
 
   const handleSignIn = async (e) => {
     e.preventDefault()

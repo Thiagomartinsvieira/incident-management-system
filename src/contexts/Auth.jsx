@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext({})
 
+// eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loadingAuth, setLoadingAuth] = useState(false)
